@@ -10,17 +10,17 @@ const external = { target: '_blank', rel: 'noopener noreferrer' };
 
 const services = [
   {
-    number: '01 / AIRCON', code: 'AC', title: 'Aircon repair',
+    number: '01 / AIRCON', title: 'Aircon repair',
     description: 'Tell us what your unit is doing, or what it isn’t. Start a conversation about repair through Messenger.',
-    link: 'Ask about repair', label: 'Ask about aircon repair on Messenger', featured: true,
+    link: 'Ask about repair', label: 'Ask about aircon repair on Messenger',
   },
   {
-    number: '02 / REFRIGERATION', code: 'RF', title: 'Refrigeration repair',
+    number: '02 / REFRIGERATION', title: 'Refrigeration repair',
     description: 'Get in touch about refrigeration equipment that needs inspection or repair.',
     link: 'Ask about repair', label: 'Ask about refrigeration repair on Messenger',
   },
   {
-    number: '03 / UPKEEP', code: 'MT', title: 'Maintenance',
+    number: '03 / UPKEEP', title: 'Maintenance',
     description: 'Ask about maintenance for your aircon or refrigeration system and share its current condition.',
     link: 'Ask about maintenance', label: 'Ask about maintenance on Messenger',
   },
@@ -150,34 +150,35 @@ function Hero() {
 
 function Services() {
   return <section className="section services" id="services" aria-labelledby="services-title">
+    <div className="airflow airflow-services" aria-hidden="true"><span></span><span></span><span></span></div>
     <div className="container">
       <div className="section-heading services-heading" data-reveal>
-        <div><p className="section-kicker">WHAT WE DO</p><h2 id="services-title">The right help for<br /><em>your kind of cool.</em></h2></div>
-        <p>From an aircon that isn’t cooling to refrigeration equipment that needs attention, start with the service you need and talk with DCSR.</p>
+        <div><p className="section-kicker">01 / SERVICES</p><h2 id="services-title">Cooling care,<br /><em>considered.</em></h2></div>
+        <p>Find the concern that sounds familiar. DCSR can help you start the right conversation about repair or upkeep.</p>
       </div>
-      <div className="service-grid">
-        {services.map((service) => <article className={`service-card${service.featured ? ' service-card-featured' : ''}`} key={service.number} data-reveal>
-          <div className="service-card-top"><span className="service-number">{service.number}</span><span className="service-code" aria-hidden="true">{service.code}</span></div>
-          <div className="service-card-body"><h3>{service.title}</h3><p>{service.description}</p><a href={MESSENGER} {...external} aria-label={service.label}><span>{service.link}</span><span className="service-arrow" aria-hidden="true">↗</span></a></div>
+      <div className="service-stream">
+        {services.map((service, index) => <article className={`service-flow service-flow-${index + 1}`} key={service.number} data-reveal>
+          <div className="service-flow-symbol" aria-hidden="true"><span>{service.number.slice(0, 2)}</span><i></i></div>
+          <div className="service-flow-copy"><span>{service.number.slice(5)}</span><h3>{service.title}</h3><p>{service.description}</p></div>
+          <a href={MESSENGER} {...external} aria-label={service.label}><span>{service.link}</span><span className="service-flow-arrow" aria-hidden="true">↗</span></a>
         </article>)}
       </div>
-      <p className="service-footnote">Have another cooling concern? <a href={MESSENGER} {...external}>Send DCSR a message <span aria-hidden="true">↗</span></a></p>
+      <p className="service-footnote">A different cooling concern? <a href={MESSENGER} {...external}>Tell DCSR what is happening <span aria-hidden="true">↗</span></a></p>
     </div>
   </section>;
 }
 
 function About() {
   return <section className="about-band" id="about" aria-labelledby="about-title">
+    <div className="airflow airflow-about" aria-hidden="true"><span></span><span></span></div>
     <div className="container about-grid">
-      <div className="about-photo" data-reveal><img src="/assets/cool-room.jpg" width="900" height="1200" alt="Illustrative photo of a quiet room with an installed air conditioner" loading="lazy" /><span>Illustrative photography</span><span className="about-photo-number" aria-hidden="true">D / 01</span></div>
+      <div className="about-photo" data-reveal><img src="/assets/cool-room.jpg" width="900" height="1200" alt="Illustrative photo of a quiet room with an installed air conditioner" loading="lazy" /><div className="about-photo-caption"><span>DCSR / COMFORT AT HOME</span><span>Illustrative photography</span></div></div>
       <div className="about-copy" data-reveal>
-        <p className="section-kicker section-kicker-light">ABOUT DCSR</p>
-        <h2 id="about-title">A technical partner for <em>better comfort.</em></h2>
-        <p>DCSR Aircon & Refrigeration Repair Services is focused on repair and maintenance for the cooling equipment that supports your space.</p>
-        <div className="about-services" aria-label="Service areas"><span>Aircon</span><span>Refrigeration</span><span>Maintenance</span></div>
-        <blockquote>“Your Technical Partner & Quality Serviced”</blockquote>
-        <p className="quote-source">DCSR’s Facebook page logo</p>
-        <a className="button button-white" href={MESSENGER} {...external}>Let’s talk about your unit <span aria-hidden="true">↗</span></a>
+        <p className="section-kicker section-kicker-light">02 / ABOUT DCSR</p>
+        <h2 id="about-title">The details make<br /><em>the difference.</em></h2>
+        <p>DCSR handles aircon and refrigeration repair and maintenance. Tell them what is happening with your unit, and get a direct conversation started.</p>
+        <div className="about-proof"><span>FROM A CUSTOMER REVIEW</span><blockquote>“Very accommodating ng owner and at the same time sya din ang mismong gagawa ng trabaho.”</blockquote><strong>Aileen Nicasio · June 2023</strong></div>
+        <a className="text-link about-link" href={MESSENGER} {...external}>Talk to DCSR about your unit <span aria-hidden="true">↗</span></a>
       </div>
     </div>
   </section>;
@@ -185,8 +186,9 @@ function About() {
 
 function Steps() {
   return <section className="section steps" aria-labelledby="steps-title">
+    <div className="airflow airflow-steps" aria-hidden="true"><span></span><span></span></div>
     <div className="container">
-      <div className="steps-intro" data-reveal><div><p className="section-kicker">GET STARTED</p><h2 id="steps-title">A simple start.<br /><em>A clearer next step.</em></h2></div><div><p>No long form to fill out. Message DCSR with a few useful details so the conversation can begin.</p><a className="text-link text-link-blue" href={MESSENGER} {...external}>Open Messenger <span aria-hidden="true">↗</span></a></div></div>
+      <div className="steps-intro" data-reveal><div><p className="section-kicker">03 / THE PROCESS</p><h2 id="steps-title">A clear way<br /><em>to begin.</em></h2></div><div><p>Start with what you know. A few useful details help DCSR understand your concern and follow up.</p><a className="text-link text-link-blue" href={MESSENGER} {...external}>Open Messenger <span aria-hidden="true">↗</span></a></div></div>
       <ol className="steps-list">{steps.map(([title, description], index) => <li key={title} data-reveal><span>{String(index + 1).padStart(2, '0')}</span><div><h3>{title}</h3><p>{description}</p></div></li>)}</ol>
     </div>
   </section>;
@@ -194,8 +196,9 @@ function Steps() {
 
 function Reviews() {
   return <section className="reviews" id="reviews" aria-labelledby="reviews-title">
+    <div className="airflow airflow-reviews" aria-hidden="true"><span></span><span></span></div>
     <div className="container reviews-grid">
-      <div className="reviews-intro" data-reveal><p className="section-kicker">CUSTOMER FEEDBACK</p><h2 id="reviews-title">Kind words from<br /><em>real customers.</em></h2><p>These recommendations were shared from DCSR’s Facebook page. Read the original posts for their full context.</p><a className="button button-primary" href={REVIEWS} {...external}>View Facebook reviews <span aria-hidden="true">↗</span></a><span className="reviews-count">06 / CUSTOMER VOICES</span></div>
+      <div className="reviews-intro" data-reveal><p className="section-kicker">04 / CUSTOMER VOICES</p><h2 id="reviews-title">The work<br /><em>speaks through them.</em></h2><p>Customers shared these recommendations on DCSR’s Facebook page. Their words say more than a sales pitch.</p><a className="button button-primary" href={REVIEWS} {...external}>Read reviews on Facebook <span aria-hidden="true">↗</span></a><span className="reviews-count">06 / RECOMMENDATIONS SHARED</span></div>
       <div className="review-stack" data-reveal>
         {reviews.map((review, index) => <article className="review-card" key={review.name}>
           <div className="review-card-head"><span>REVIEW / {String(index + 1).padStart(2, '0')}</span><span>FACEBOOK RECOMMENDATION</span></div>
@@ -221,17 +224,18 @@ function CalCalendar() {
 
 function Booking() {
   return <section className="booking-section" id="inquire" aria-labelledby="booking-title">
+    <div className="airflow airflow-booking" aria-hidden="true"><span></span><span></span></div>
     <div className="container booking-grid">
       <div className="booking-copy" data-reveal>
-        <p className="section-kicker section-kicker-light">SERVICE INQUIRY</p>
+        <p className="section-kicker section-kicker-light">05 / SERVICE INQUIRY</p>
         <h2 id="booking-title">Tell us the issue.<br /><em>{CAL_LINK ? 'Find time to talk.' : 'Start the conversation.'}</em></h2>
-        <p>{CAL_LINK ? 'Choose a time to discuss your aircon or refrigeration concern. DCSR can confirm service details and availability with you afterward.' : 'Online scheduling is being prepared. Send DCSR your aircon or refrigeration concern on Messenger in the meantime.'}</p>
-        <div className="booking-prep"><span>WHAT TO HAVE READY</span><ul><li>Type of unit or service needed</li><li>What you have noticed</li><li>Your city or barangay</li></ul></div>
+        <p>{CAL_LINK ? 'Choose a time to discuss your aircon or refrigeration concern. DCSR can confirm service details and availability with you afterward.' : 'Begin with a short message about your unit. DCSR can discuss the details and next steps with you directly.'}</p>
+        {CAL_LINK && <div className="booking-prep"><span>WHAT TO HAVE READY</span><ul><li>Type of unit or service needed</li><li>What you have noticed</li><li>Your city or barangay</li></ul></div>}
       </div>
       <div className="booking-frame">
-        <div className="booking-frame-head"><span>DCSR / SERVICE INQUIRY</span><span>{CAL_LINK ? 'CHOOSE A TIME' : 'CALENDAR SETUP'}</span></div>
-        {CAL_LINK ? <div className="booking-embed"><CalCalendar /></div> : <div className="booking-pending"><span className="booking-calendar-mark" aria-hidden="true">▦</span><h3>Online scheduling is being prepared.</h3><p>You can still send your inquiry now. Tell DCSR about your unit, what is happening, and your location on Messenger.</p><a className="button button-primary" href={MESSENGER} {...external}>Send an inquiry <span aria-hidden="true">↗</span></a></div>}
-        <div className="booking-frame-foot"><span>An inquiry time is for discussing your concern.</span>{CAL_LINK && <a href={`https://cal.com/${CAL_LINK}`} {...external}>Open calendar separately ↗</a>}</div>
+        <div className="booking-frame-head"><span>DCSR / SERVICE INQUIRY</span><span>{CAL_LINK ? 'CHOOSE A TIME' : 'MESSAGE DCSR'}</span></div>
+        {CAL_LINK ? <div className="booking-embed"><CalCalendar /></div> : <div className="booking-pending"><span className="booking-pending-label">DIRECT INQUIRY / MESSENGER</span><h3>Tell us what needs attention.</h3><p>Online scheduling is being prepared. You can send the essentials now and continue directly with DCSR.</p><div className="booking-preview" aria-label="Details to include"><span><b>01</b> Your unit</span><span><b>02</b> The issue</span><span><b>03</b> Your location</span></div><a className="button button-primary" href={MESSENGER} {...external}>Send an inquiry <span aria-hidden="true">↗</span></a></div>}
+        <div className="booking-frame-foot"><span>{CAL_LINK ? 'An inquiry time is for discussing your concern.' : 'Continue the conversation directly on Messenger.'}</span>{CAL_LINK && <a href={`https://cal.com/${CAL_LINK}`} {...external}>Open calendar separately ↗</a>}</div>
       </div>
     </div>
   </section>;
@@ -240,7 +244,7 @@ function Booking() {
 function Faq() {
   return <section className="section faq" id="faq" aria-labelledby="faq-title">
     <div className="container faq-grid">
-      <div data-reveal><p className="section-kicker">GOOD TO KNOW</p><h2 id="faq-title">A few questions,<br /><em>answered.</em></h2><p>Need something more specific? DCSR is one Messenger conversation away.</p></div>
+      <div data-reveal><p className="section-kicker">06 / GOOD TO KNOW</p><h2 id="faq-title">A few questions,<br /><em>answered.</em></h2><p>Need something more specific? DCSR is one Messenger conversation away.</p></div>
       <div className="faq-list" data-reveal>{faqs.map(([question, answer], index) => <details key={question}><summary><small>{String(index + 1).padStart(2, '0')}</small>{question} <span aria-hidden="true">+</span></summary><p>{answer}</p></details>)}</div>
     </div>
   </section>;
@@ -248,7 +252,7 @@ function Faq() {
 
 function FinalCta() {
   return <section className="final-cta" aria-labelledby="final-title">
-    <div className="container final-cta-inner"><div data-reveal><p className="section-kicker section-kicker-light">READY WHEN YOU ARE</p><h2 id="final-title">Let's get back<br />to <em>comfortable.</em></h2><p>Tell DCSR what’s happening with your aircon or refrigeration unit.</p></div><a className="button button-white button-large" href={MESSENGER} {...external}>Message DCSR on Messenger <span aria-hidden="true">↗</span></a><span className="final-decoration" aria-hidden="true">DCSR</span></div>
+    <div className="container final-cta-inner"><div data-reveal><p className="section-kicker">READY WHEN YOU ARE</p><h2 id="final-title">Cool again<br /><em>starts here.</em></h2><p>Tell DCSR what’s happening with your aircon or refrigeration unit.</p><a className="button button-primary button-large" href={MESSENGER} {...external}>Message DCSR on Messenger <span aria-hidden="true">↗</span></a></div><div className="final-breeze" aria-hidden="true"><span></span><span></span><span></span></div></div>
   </section>;
 }
 
@@ -259,6 +263,7 @@ function Footer() {
       <div><h2>Explore</h2><a href="#services">Services</a><a href="#about">About DCSR</a><a href="#reviews">Reviews</a><a href="#inquire">Inquire</a><a href="#faq">FAQs</a></div>
       <div><h2>Connect</h2><a href={MESSENGER} {...external}>Messenger ↗</a><a href={FACEBOOK} {...external}>Facebook page ↗</a><a href={REVIEWS} {...external}>Customer reviews ↗</a></div>
     </div>
+    <div className="container footer-signature" aria-hidden="true">DCSR <span>↗</span></div>
     <div className="container footer-bottom"><span>© {new Date().getFullYear()} DCSR Aircon & Refrigeration Repair Services</span><span>Built for better first conversations.</span></div>
   </footer>;
 }
