@@ -139,7 +139,21 @@ function Hero() {
         <p>A clear first step toward cool again.</p>
         <div className="hero-guide-steps"><span><b>01</b> Your unit</span><span><b>02</b> The issue</span><span><b>03</b> Your location</span></div>
       </div>
+      <div className="hero-proof">
+        <span>CUSTOMER NOTE / 2023</span>
+        <blockquote>“SuperB! Affordable but QUALITY service. 3 years and counting customer here 😊”</blockquote>
+        <strong>Aileen Zapanta</strong>
+      </div>
     </div>
+    <svg className="hero-product-front" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <defs>
+        <clipPath id="hero-product-edge" clipPathUnits="userSpaceOnUse">
+          <path d="M745 660 L1112 642 L1167 653 L1168 689 L745 689 Z" />
+          <path d="M1106 645 L1168 645 L1186 814 L1186 938 L1160 949 L1106 947 Z" />
+        </clipPath>
+      </defs>
+      <image href="/assets/hero-aircon-poster-v2.webp" width="1920" height="1080" clipPath="url(#hero-product-edge)" />
+    </svg>
   </section>;
 }
 
@@ -302,22 +316,16 @@ function Preloader({ exiting }) {
 }
 
 export default function App() {
-  const [showPreloader, setShowPreloader] = useState(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || window.location.hash) return false;
-    try { return !sessionStorage.getItem('dcsr-intro-seen'); }
-    catch { return true; }
-  });
+  const [showPreloader, setShowPreloader] = useState(() => !window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   const [preloaderExiting, setPreloaderExiting] = useState(false);
 
   useEffect(() => {
     if (!showPreloader) return;
-    try { sessionStorage.setItem('dcsr-intro-seen', '1'); }
-    catch { /* The intro can still exit when storage is unavailable. */ }
     const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const skipMotion = () => { if (motion.matches) setShowPreloader(false); };
     motion.addEventListener('change', skipMotion);
-    const exitTimer = window.setTimeout(() => setPreloaderExiting(true), 520);
-    const removeTimer = window.setTimeout(() => setShowPreloader(false), 1420);
+    const exitTimer = window.setTimeout(() => setPreloaderExiting(true), 900);
+    const removeTimer = window.setTimeout(() => setShowPreloader(false), 1800);
     return () => {
       motion.removeEventListener('change', skipMotion);
       window.clearTimeout(exitTimer);
