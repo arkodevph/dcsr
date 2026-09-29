@@ -10,6 +10,8 @@ A first-time visitor should recognize a relevant service, hear from actual custo
 
 | Reference | Visual or structural cue considered | Decision |
 | --- | --- | --- |
+| [Airxori AC Repair Landing Page](https://dribbble.com/shots/26753792-AC-Repair-Landing-Page-Design) | Large rounded media frame with navigation over the image | Use the existing DCSR video as one tall inset hero card, with navigation aligned over it. |
+| [Nature-Inspired Landing Page Hero](https://dribbble.com/shots/27709708-Nature-Inspired-Landing-Page-Hero-Section) | Glassy framing, broad negative space, quiet nav | Use a clear integrated nav at the top, then a frosted fixed nav when scrolling. |
 | [Blue Flow HVAC](https://dribbble.com/shots/27702544-Blue-Flow-HVAC-Repair-Air-Conditioning-Landing-Page) | Blue cooling identity and local service context | Use as category context, without copying its layout. |
 | [CoolFix by Phenomenon Studio](https://dribbble.com/shots/27270697-HVAC-Website-Design-CoolFix) | Calm HVAC presentation and direct service entry points | Keep services legible and one direct CTA destination. |
 | [CoolFix by CST Digital Agency](https://dribbble.com/shots/27451705-CoolFix-Professional-Air-Conditioning-Service-Website) | Service, review, FAQ, and inquiry sequence | Keep the full lead path but use DCSR's blue and white palette. |
@@ -21,7 +23,7 @@ A first-time visitor should recognize a relevant service, hear from actual custo
 | [Air Conditioners Website](https://dribbble.com/shots/14144724-Air-Conditioners-Website) | White space and product context | Leave room around the illustration and avoid decorative clutter. |
 | [Montreval Membership Page](https://dribbble.com/shots/27440833-Montreval-Luxury-Private-Club-Membership-Website-Page-Design) | Layered editorial content | Keep customer recommendations as a tangible stack. |
 
-The earlier condensed typography, dark rectangular sections, and service table broke the visual continuity with the video hero. The revised palette is sky `#dbeef9`, cloud white `#fafdff`, ice `#e5f5fc`, ink `#173d59`, action blue `#236b96`, and cyan accents. Outfit and Georgia continue the hero type pairing. Sections use curved airflow traces, staggered rounded service bands, glassy white quotes and reviews, and a light final inquiry area. These are adaptations of the references, not imported designs or business facts.
+The earlier condensed typography, dark rectangular sections, and service table broke the visual continuity with the video hero. The revised palette is sky `#dbeef9`, cloud white `#fafdff`, ice `#e5f5fc`, ink `#173d59`, action blue `#236b96`, and cyan accents. Outfit and Georgia continue the hero type pairing. The hero follows the inset image-card treatment from Airxori; the navigation stays in view with a frosted surface after scrolling. Sections use staggered rounded rectangular service bands, glassy white quotes and reviews, and a light final inquiry area. Decorative circle outlines were removed. These are adaptations of the references, not imported designs or business facts.
 
 ## Evidence ledger
 

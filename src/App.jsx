@@ -75,7 +75,15 @@ function Brand() {
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const menuButton = useRef(null);
+
+  useEffect(() => {
+    const update = () => setScrolled(window.scrollY > 48);
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    return () => window.removeEventListener('scroll', update);
+  }, []);
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -89,7 +97,7 @@ function Header() {
     return () => document.removeEventListener('keydown', onKeyDown);
   }, [menuOpen]);
 
-  return <header className="site-header" id="top">
+  return <header className={`site-header${scrolled ? ' is-scrolled' : ''}${menuOpen ? ' menu-open' : ''}`} id="top">
     <div className="container header-inner">
       <Brand />
       <button ref={menuButton} className="menu-toggle" type="button" aria-expanded={menuOpen} aria-controls="site-nav" aria-label={menuOpen ? 'Close menu' : 'Open menu'} onClick={() => setMenuOpen(!menuOpen)}>
@@ -150,7 +158,6 @@ function Hero() {
 
 function Services() {
   return <section className="section services" id="services" aria-labelledby="services-title">
-    <div className="airflow airflow-services" aria-hidden="true"><span></span><span></span><span></span></div>
     <div className="container">
       <div className="section-heading services-heading" data-reveal>
         <div><p className="section-kicker">01 / SERVICES</p><h2 id="services-title">Cooling care,<br /><em>considered.</em></h2></div>
@@ -158,7 +165,7 @@ function Services() {
       </div>
       <div className="service-stream">
         {services.map((service, index) => <article className={`service-flow service-flow-${index + 1}`} key={service.number} data-reveal>
-          <div className="service-flow-symbol" aria-hidden="true"><span>{service.number.slice(0, 2)}</span><i></i></div>
+          <div className="service-flow-symbol" aria-hidden="true"><span>{service.number.slice(0, 2)}</span></div>
           <div className="service-flow-copy"><span>{service.number.slice(5)}</span><h3>{service.title}</h3><p>{service.description}</p></div>
           <a href={MESSENGER} {...external} aria-label={service.label}><span>{service.link}</span><span className="service-flow-arrow" aria-hidden="true">↗</span></a>
         </article>)}
@@ -170,7 +177,6 @@ function Services() {
 
 function About() {
   return <section className="about-band" id="about" aria-labelledby="about-title">
-    <div className="airflow airflow-about" aria-hidden="true"><span></span><span></span></div>
     <div className="container about-grid">
       <div className="about-photo" data-reveal><img src="/assets/cool-room.jpg" width="900" height="1200" alt="Illustrative photo of a quiet room with an installed air conditioner" loading="lazy" /><div className="about-photo-caption"><span>DCSR / COMFORT AT HOME</span><span>Illustrative photography</span></div></div>
       <div className="about-copy" data-reveal>
@@ -186,7 +192,6 @@ function About() {
 
 function Steps() {
   return <section className="section steps" aria-labelledby="steps-title">
-    <div className="airflow airflow-steps" aria-hidden="true"><span></span><span></span></div>
     <div className="container">
       <div className="steps-intro" data-reveal><div><p className="section-kicker">03 / THE PROCESS</p><h2 id="steps-title">A clear way<br /><em>to begin.</em></h2></div><div><p>Start with what you know. A few useful details help DCSR understand your concern and follow up.</p><a className="text-link text-link-blue" href={MESSENGER} {...external}>Open Messenger <span aria-hidden="true">↗</span></a></div></div>
       <ol className="steps-list">{steps.map(([title, description], index) => <li key={title} data-reveal><span>{String(index + 1).padStart(2, '0')}</span><div><h3>{title}</h3><p>{description}</p></div></li>)}</ol>
@@ -196,7 +201,6 @@ function Steps() {
 
 function Reviews() {
   return <section className="reviews" id="reviews" aria-labelledby="reviews-title">
-    <div className="airflow airflow-reviews" aria-hidden="true"><span></span><span></span></div>
     <div className="container reviews-grid">
       <div className="reviews-intro" data-reveal><p className="section-kicker">04 / CUSTOMER VOICES</p><h2 id="reviews-title">The work<br /><em>speaks through them.</em></h2><p>Customers shared these recommendations on DCSR’s Facebook page. Their words say more than a sales pitch.</p><a className="button button-primary" href={REVIEWS} {...external}>Read reviews on Facebook <span aria-hidden="true">↗</span></a><span className="reviews-count">06 / RECOMMENDATIONS SHARED</span></div>
       <div className="review-stack" data-reveal>
@@ -224,7 +228,6 @@ function CalCalendar() {
 
 function Booking() {
   return <section className="booking-section" id="inquire" aria-labelledby="booking-title">
-    <div className="airflow airflow-booking" aria-hidden="true"><span></span><span></span></div>
     <div className="container booking-grid">
       <div className="booking-copy" data-reveal>
         <p className="section-kicker section-kicker-light">05 / SERVICE INQUIRY</p>
@@ -252,7 +255,7 @@ function Faq() {
 
 function FinalCta() {
   return <section className="final-cta" aria-labelledby="final-title">
-    <div className="container final-cta-inner"><div data-reveal><p className="section-kicker">READY WHEN YOU ARE</p><h2 id="final-title">Cool again<br /><em>starts here.</em></h2><p>Tell DCSR what’s happening with your aircon or refrigeration unit.</p><a className="button button-primary button-large" href={MESSENGER} {...external}>Message DCSR on Messenger <span aria-hidden="true">↗</span></a></div><div className="final-breeze" aria-hidden="true"><span></span><span></span><span></span></div></div>
+    <div className="container final-cta-inner"><div data-reveal><p className="section-kicker">READY WHEN YOU ARE</p><h2 id="final-title">Cool again<br /><em>starts here.</em></h2><p>Tell DCSR what’s happening with your aircon or refrigeration unit.</p><a className="button button-primary button-large" href={MESSENGER} {...external}>Message DCSR on Messenger <span aria-hidden="true">↗</span></a></div></div>
   </section>;
 }
 
