@@ -58,7 +58,6 @@ section[id] { scroll-margin-top: 94px; }
 .hero-main { position: relative; z-index: 1; max-width: 900px; text-align: center; }
 .hero-kicker, .section-kicker { display: flex; align-items: center; gap: 10px; margin: 0 0 22px; color: var(--blue); font-size: .69rem; font-weight: 800; letter-spacing: .19em; }
 .hero-kicker { justify-content: center; margin-bottom: 20px; color: #2d5c91; }
-.hero-kicker span, .section-kicker span { display: inline-block; width: 27px; height: 2px; background: currentColor; }
 .hero h1, h2, h3, p { margin-top: 0; }
 .hero h1, .section h2, .about-copy h2, .reviews h2, .final-cta h2 { font-family: "Outfit", Arial, sans-serif; font-weight: 700; letter-spacing: -.055em; }
 .hero h1 { margin-bottom: 17px; color: #153c58; font-size: clamp(4.4rem, 6.5vw, 6.4rem); line-height: .99; }
@@ -86,8 +85,6 @@ section[id] { scroll-margin-top: 94px; }
 .hero-guide-steps { display: flex; justify-content: space-between; gap: 7px; border-top: 1px solid #d5e4eb; padding-top: 12px; color: #476b7f; font-size: .65rem; font-weight: 700; }
 .hero-guide-steps span { white-space: nowrap; }
 .hero-guide-steps b { margin-right: 3px; color: #2e789f; }
-.hero-bottom { position: absolute; left: 0; right: 0; bottom: 24px; display: flex; justify-content: space-between; gap: 20px; color: #245a76; font-size: .63rem; font-weight: 800; letter-spacing: .12em; }
-.hero-bottom a { text-decoration: underline; text-underline-offset: 4px; }
 
 .section { padding-block: 113px; }
 .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 40px; margin-bottom: 43px; }
@@ -211,8 +208,6 @@ section[id] { scroll-margin-top: 94px; }
   .hero-actions { gap: 9px; }
   .hero .button { min-height: 47px; gap: 10px; padding-inline: 17px; font-size: .76rem; }
   .hero-guide { display: none; }
-  .hero-bottom { bottom: 17px; justify-content: center; font-size: .57rem; }
-  .hero-bottom > span { display: none; }
   .section h2, .reviews h2 { font-size: clamp(2.7rem, 9vw, 3.7rem); }
   .service-grid { grid-template-columns: 1fr; }
   .service-card, .service-card:last-child { grid-column: auto; min-height: 270px; }

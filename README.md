@@ -35,7 +35,7 @@ The website controls the section layout, typography, and surrounding colors. Cal
 - Service section layout and saturated blue palette: https://dribbble.com/shots/26865291-AirServe-HVAC-Repair-Website-Design
 - Deep navy, pale blue, and white section rhythm: https://dribbble.com/shots/27270697-HVAC-Website-Design-CoolFix
 - Hero layout: the two images supplied in the conversation
-- Preloader motion references: [ideative's blue wave](https://dribbble.com/shots/4321884-Preloader-animation), [ExtraHut's blue and white brand intro](https://dribbble.com/shots/5408341-ExtraHut-website-preloader), and [Uniko's minimal site transition](https://dribbble.com/shots/24954294-Architectural-Website-Design-Preloader-Menu). DCSR uses its own fan mark and a split exit into the aircon hero.
+- Preloader motion references: [ideative's blue wave](https://dribbble.com/shots/4321884-Preloader-animation), [ExtraHut's blue and white brand intro](https://dribbble.com/shots/5408341-ExtraHut-website-preloader), and [Uniko's minimal site transition](https://dribbble.com/shots/24954294-Architectural-Website-Design-Preloader-Menu). DCSR uses its own fan mark and a circular reveal from the fan into the aircon hero.
 - Illustrative room photo: https://www.pexels.com/photo/a-minimalistic-white-room-7587368/
 
 The room photo illustrates the service; it is not presented as a DCSR job.

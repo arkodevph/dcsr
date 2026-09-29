@@ -126,7 +126,7 @@ function Hero() {
     <div className="hero-wash" aria-hidden="true"></div>
     <div className="container hero-content">
       <div className="hero-main">
-        <p className="hero-kicker"><span></span> DCSR AIRCON & REFRIGERATION</p>
+        <p className="hero-kicker">DCSR AIRCON & REFRIGERATION</p>
         <h1 id="hero-title"><span className="hero-line">Aircon trouble?</span><em className="hero-line hero-cool">Bring back the cool.</em></h1>
         <p className="hero-description">Aircon and refrigeration repair and maintenance. Tell DCSR what needs attention and start the conversation on Messenger.</p>
         <div className="hero-actions">
@@ -135,11 +135,10 @@ function Hero() {
         </div>
       </div>
       <div className="hero-guide">
-        <div className="hero-guide-head"><span>DCSR / START HERE</span><span>01—03</span></div>
+        <div className="hero-guide-head"><span>DCSR / START HERE</span><span>01 / 03</span></div>
         <p>A clear first step toward cool again.</p>
         <div className="hero-guide-steps"><span><b>01</b> Your unit</span><span><b>02</b> The issue</span><span><b>03</b> Your location</span></div>
       </div>
-      <div className="hero-bottom"><span>REPAIR & MAINTENANCE</span><span>AIRCON & REFRIGERATION</span><a href={FACEBOOK} {...external}>Find us on Facebook ↗</a></div>
     </div>
   </section>;
 }
@@ -148,7 +147,7 @@ function Services() {
   return <section className="section services" id="services" aria-labelledby="services-title">
     <div className="container">
       <div className="section-heading services-heading" data-reveal>
-        <div><p className="section-kicker"><span></span> WHAT WE DO</p><h2 id="services-title">The right help for<br /><em>your kind of cool.</em></h2></div>
+        <div><p className="section-kicker">WHAT WE DO</p><h2 id="services-title">The right help for<br /><em>your kind of cool.</em></h2></div>
         <p>From an aircon that isn’t cooling to refrigeration equipment that needs attention, start with the service you need and talk with DCSR.</p>
       </div>
       <div className="service-grid">
@@ -167,12 +166,12 @@ function About() {
     <div className="container about-grid">
       <div className="about-photo" data-reveal><img src="/assets/cool-room.jpg" width="900" height="1200" alt="Illustrative photo of a quiet room with an installed air conditioner" loading="lazy" /><span>Illustrative photography</span><span className="about-photo-number" aria-hidden="true">D / 01</span></div>
       <div className="about-copy" data-reveal>
-        <p className="section-kicker section-kicker-light"><span></span> ABOUT DCSR</p>
+        <p className="section-kicker section-kicker-light">ABOUT DCSR</p>
         <h2 id="about-title">A technical partner for <em>better comfort.</em></h2>
         <p>DCSR Aircon & Refrigeration Repair Services is focused on repair and maintenance for the cooling equipment that supports your space.</p>
         <div className="about-services" aria-label="Service areas"><span>Aircon</span><span>Refrigeration</span><span>Maintenance</span></div>
         <blockquote>“Your Technical Partner & Quality Serviced”</blockquote>
-        <p className="quote-source">— DCSR’s Facebook page logo</p>
+        <p className="quote-source">DCSR’s Facebook page logo</p>
         <a className="button button-white" href={MESSENGER} {...external}>Let’s talk about your unit <span aria-hidden="true">↗</span></a>
       </div>
     </div>
@@ -182,7 +181,7 @@ function About() {
 function Steps() {
   return <section className="section steps" aria-labelledby="steps-title">
     <div className="container">
-      <div className="steps-intro" data-reveal><div><p className="section-kicker"><span></span> GET STARTED</p><h2 id="steps-title">A simple start.<br /><em>A clearer next step.</em></h2></div><div><p>No long form to fill out. Message DCSR with a few useful details so the conversation can begin.</p><a className="text-link text-link-blue" href={MESSENGER} {...external}>Open Messenger <span aria-hidden="true">↗</span></a></div></div>
+      <div className="steps-intro" data-reveal><div><p className="section-kicker">GET STARTED</p><h2 id="steps-title">A simple start.<br /><em>A clearer next step.</em></h2></div><div><p>No long form to fill out. Message DCSR with a few useful details so the conversation can begin.</p><a className="text-link text-link-blue" href={MESSENGER} {...external}>Open Messenger <span aria-hidden="true">↗</span></a></div></div>
       <ol className="steps-list">{steps.map(([title, description], index) => <li key={title} data-reveal><span>{String(index + 1).padStart(2, '0')}</span><div><h3>{title}</h3><p>{description}</p></div></li>)}</ol>
     </div>
   </section>;
@@ -191,7 +190,7 @@ function Steps() {
 function Reviews() {
   return <section className="reviews" id="reviews" aria-labelledby="reviews-title">
     <div className="container reviews-grid">
-      <div className="reviews-intro" data-reveal><p className="section-kicker"><span></span> CUSTOMER FEEDBACK</p><h2 id="reviews-title">Kind words from<br /><em>real customers.</em></h2><p>These recommendations were shared from DCSR’s Facebook page. Read the original posts for their full context.</p><a className="button button-primary" href={REVIEWS} {...external}>View Facebook reviews <span aria-hidden="true">↗</span></a><span className="reviews-count">06 / CUSTOMER VOICES</span></div>
+      <div className="reviews-intro" data-reveal><p className="section-kicker">CUSTOMER FEEDBACK</p><h2 id="reviews-title">Kind words from<br /><em>real customers.</em></h2><p>These recommendations were shared from DCSR’s Facebook page. Read the original posts for their full context.</p><a className="button button-primary" href={REVIEWS} {...external}>View Facebook reviews <span aria-hidden="true">↗</span></a><span className="reviews-count">06 / CUSTOMER VOICES</span></div>
       <div className="review-stack" data-reveal>
         {reviews.map((review, index) => <article className="review-card" key={review.name}>
           <div className="review-card-head"><span>REVIEW / {String(index + 1).padStart(2, '0')}</span><span>FACEBOOK RECOMMENDATION</span></div>
@@ -219,7 +218,7 @@ function Booking() {
   return <section className="booking-section" id="inquire" aria-labelledby="booking-title">
     <div className="container booking-grid">
       <div className="booking-copy" data-reveal>
-        <p className="section-kicker section-kicker-light"><span></span> SERVICE INQUIRY</p>
+        <p className="section-kicker section-kicker-light">SERVICE INQUIRY</p>
         <h2 id="booking-title">Tell us the issue.<br /><em>{CAL_LINK ? 'Find time to talk.' : 'Start the conversation.'}</em></h2>
         <p>{CAL_LINK ? 'Choose a time to discuss your aircon or refrigeration concern. DCSR can confirm service details and availability with you afterward.' : 'Online scheduling is being prepared. Send DCSR your aircon or refrigeration concern on Messenger in the meantime.'}</p>
         <div className="booking-prep"><span>WHAT TO HAVE READY</span><ul><li>Type of unit or service needed</li><li>What you have noticed</li><li>Your city or barangay</li></ul></div>
@@ -236,7 +235,7 @@ function Booking() {
 function Faq() {
   return <section className="section faq" id="faq" aria-labelledby="faq-title">
     <div className="container faq-grid">
-      <div data-reveal><p className="section-kicker"><span></span> GOOD TO KNOW</p><h2 id="faq-title">A few questions,<br /><em>answered.</em></h2><p>Need something more specific? DCSR is one Messenger conversation away.</p></div>
+      <div data-reveal><p className="section-kicker">GOOD TO KNOW</p><h2 id="faq-title">A few questions,<br /><em>answered.</em></h2><p>Need something more specific? DCSR is one Messenger conversation away.</p></div>
       <div className="faq-list" data-reveal>{faqs.map(([question, answer], index) => <details key={question}><summary><small>{String(index + 1).padStart(2, '0')}</small>{question} <span aria-hidden="true">+</span></summary><p>{answer}</p></details>)}</div>
     </div>
   </section>;
@@ -244,7 +243,7 @@ function Faq() {
 
 function FinalCta() {
   return <section className="final-cta" aria-labelledby="final-title">
-    <div className="container final-cta-inner"><div data-reveal><p className="section-kicker section-kicker-light"><span></span> READY WHEN YOU ARE</p><h2 id="final-title">Let's get back<br />to <em>comfortable.</em></h2><p>Tell DCSR what’s happening with your aircon or refrigeration unit.</p></div><a className="button button-white button-large" href={MESSENGER} {...external}>Message DCSR on Messenger <span aria-hidden="true">↗</span></a><span className="final-decoration" aria-hidden="true">DCSR</span></div>
+    <div className="container final-cta-inner"><div data-reveal><p className="section-kicker section-kicker-light">READY WHEN YOU ARE</p><h2 id="final-title">Let's get back<br />to <em>comfortable.</em></h2><p>Tell DCSR what’s happening with your aircon or refrigeration unit.</p></div><a className="button button-white button-large" href={MESSENGER} {...external}>Message DCSR on Messenger <span aria-hidden="true">↗</span></a><span className="final-decoration" aria-hidden="true">DCSR</span></div>
   </section>;
 }
 
@@ -276,13 +275,28 @@ function MobileMessenger() {
 
 function Preloader({ exiting }) {
   return <div className={`preloader${exiting ? ' is-exiting' : ''}`} role="status" aria-label="Opening DCSR website">
-    <div className="preloader-panel preloader-panel-left" aria-hidden="true"></div>
-    <div className="preloader-panel preloader-panel-right" aria-hidden="true"></div>
+    <svg className="preloader-curtain" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+      <defs>
+        <linearGradient id="preloader-blue" x1="0" y1="0" x2="1" y2="1">
+          <stop stopColor="#0a2b58" /><stop offset="1" stopColor="#164986" />
+        </linearGradient>
+        <mask id="preloader-reveal" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse" x="0" y="0" width="100" height="100">
+          <rect width="100" height="100" fill="white" />
+          <circle className="preloader-hole" cx="50" cy="38" r="90" fill="black" />
+        </mask>
+      </defs>
+      <rect width="100" height="100" fill="url(#preloader-blue)" mask="url(#preloader-reveal)" />
+      <circle className="preloader-rim" cx="50" cy="38" r="90" fill="none" stroke="#9be7ff" strokeWidth="0.4" vectorEffect="non-scaling-stroke" />
+    </svg>
     <div className="preloader-content" aria-hidden="true">
       <div className="preloader-fan"><span></span><span></span><span></span><span></span><i></i></div>
       <div className="preloader-wordmark">DCSR</div>
       <p>AIRCON &amp; REFRIGERATION</p>
-      <div className="preloader-air"><span></span><span></span><span></span></div>
+      <svg className="preloader-air" viewBox="0 0 180 42" aria-hidden="true">
+        <path d="M16 10 C52 0 100 20 164 9" />
+        <path d="M6 21 C50 9 113 34 174 20" />
+        <path d="M16 32 C52 22 100 43 164 31" />
+      </svg>
     </div>
   </div>;
 }
@@ -303,7 +317,7 @@ export default function App() {
     const skipMotion = () => { if (motion.matches) setShowPreloader(false); };
     motion.addEventListener('change', skipMotion);
     const exitTimer = window.setTimeout(() => setPreloaderExiting(true), 520);
-    const removeTimer = window.setTimeout(() => setShowPreloader(false), 1220);
+    const removeTimer = window.setTimeout(() => setShowPreloader(false), 1420);
     return () => {
       motion.removeEventListener('change', skipMotion);
       window.clearTimeout(exitTimer);
