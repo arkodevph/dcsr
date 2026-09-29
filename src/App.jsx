@@ -145,15 +145,6 @@ function Hero() {
         <strong>Aileen Zapanta</strong>
       </div>
     </div>
-    <svg className="hero-product-front" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-      <defs>
-        <clipPath id="hero-product-edge" clipPathUnits="userSpaceOnUse">
-          <path d="M745 660 L1112 642 L1167 653 L1168 689 L745 689 Z" />
-          <path d="M1106 645 L1168 645 L1186 814 L1186 938 L1160 949 L1106 947 Z" />
-        </clipPath>
-      </defs>
-      <image href="/assets/hero-aircon-poster-v2.webp" width="1920" height="1080" clipPath="url(#hero-product-edge)" />
-    </svg>
   </section>;
 }
 
@@ -316,18 +307,18 @@ function Preloader({ exiting }) {
 }
 
 export default function App() {
-  const [showPreloader, setShowPreloader] = useState(() => !window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  const [showPreloader, setShowPreloader] = useState(true);
   const [preloaderExiting, setPreloaderExiting] = useState(false);
 
   useEffect(() => {
     if (!showPreloader) return;
-    const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const skipMotion = () => { if (motion.matches) setShowPreloader(false); };
-    motion.addEventListener('change', skipMotion);
-    const exitTimer = window.setTimeout(() => setPreloaderExiting(true), 900);
-    const removeTimer = window.setTimeout(() => setShowPreloader(false), 1800);
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const removeTimer = window.setTimeout(() => setShowPreloader(false), 1200);
+      return () => window.clearTimeout(removeTimer);
+    }
+    const exitTimer = window.setTimeout(() => setPreloaderExiting(true), 1200);
+    const removeTimer = window.setTimeout(() => setShowPreloader(false), 2200);
     return () => {
-      motion.removeEventListener('change', skipMotion);
       window.clearTimeout(exitTimer);
       window.clearTimeout(removeTimer);
     };
