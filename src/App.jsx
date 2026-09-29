@@ -274,7 +274,43 @@ function MobileMessenger() {
   return <a className={`mobile-messenger${show ? ' is-visible' : ''}`} href={MESSENGER} {...external}>Message DCSR <span aria-hidden="true">↗</span></a>;
 }
 
+function Preloader({ exiting }) {
+  return <div className={`preloader${exiting ? ' is-exiting' : ''}`} role="status" aria-label="Opening DCSR website">
+    <div className="preloader-panel preloader-panel-left" aria-hidden="true"></div>
+    <div className="preloader-panel preloader-panel-right" aria-hidden="true"></div>
+    <div className="preloader-content" aria-hidden="true">
+      <div className="preloader-fan"><span></span><span></span><span></span><span></span><i></i></div>
+      <div className="preloader-wordmark">DCSR</div>
+      <p>AIRCON &amp; REFRIGERATION</p>
+      <div className="preloader-air"><span></span><span></span><span></span></div>
+    </div>
+  </div>;
+}
+
 export default function App() {
+  const [showPreloader, setShowPreloader] = useState(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || window.location.hash) return false;
+    try { return !sessionStorage.getItem('dcsr-intro-seen'); }
+    catch { return true; }
+  });
+  const [preloaderExiting, setPreloaderExiting] = useState(false);
+
+  useEffect(() => {
+    if (!showPreloader) return;
+    try { sessionStorage.setItem('dcsr-intro-seen', '1'); }
+    catch { /* The intro can still exit when storage is unavailable. */ }
+    const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const skipMotion = () => { if (motion.matches) setShowPreloader(false); };
+    motion.addEventListener('change', skipMotion);
+    const exitTimer = window.setTimeout(() => setPreloaderExiting(true), 520);
+    const removeTimer = window.setTimeout(() => setShowPreloader(false), 1220);
+    return () => {
+      motion.removeEventListener('change', skipMotion);
+      window.clearTimeout(exitTimer);
+      window.clearTimeout(removeTimer);
+    };
+  }, [showPreloader]);
+
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
     const elements = document.querySelectorAll('[data-reveal]');
@@ -295,10 +331,13 @@ export default function App() {
   }, []);
 
   return <>
-    <a className="skip-link" href="#main">Skip to content</a>
-    <Header />
-    <main id="main"><Hero /><Services /><About /><Steps /><Reviews /><Booking /><Faq /><FinalCta /></main>
-    <Footer />
-    <MobileMessenger />
+    {showPreloader && <Preloader exiting={preloaderExiting} />}
+    <div inert={showPreloader}>
+      <a className="skip-link" href="#main">Skip to content</a>
+      <Header />
+      <main id="main"><Hero /><Services /><About /><Steps /><Reviews /><Booking /><Faq /><FinalCta /></main>
+      <Footer />
+      <MobileMessenger />
+    </div>
   </>;
 }
