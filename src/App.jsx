@@ -81,6 +81,15 @@ const reviews = [
   },
 ];
 
+const brands = [
+  ['Fujitsu', 'fujitsu.svg'], ['Gree', 'gree.svg'], ['Hitachi', 'hitachi.svg'],
+  ['Electrolux', 'electrolux.svg'], ['GE', 'ge.svg'], ['Mitsubishi Electric', 'mitsubishi.svg'],
+  ['Daikin', 'daikin.svg'], ['Panasonic', 'panasonic.svg'], ['Sharp', 'sharp.svg'],
+  ['General', 'general.png'], ['Haier', 'haier.svg'], ['LG', 'lg.svg'],
+  ['Carrier', 'carrier.svg'], ['Koppel', 'koppel.png'], ['Samsung', 'samsung.svg'],
+  ['Toshiba', 'toshiba.svg'], ['Sanyo', 'sanyo.svg'], ['York', 'york.png'],
+];
+
 function Brand() {
   return <a className="brand" href="#top" aria-label="DCSR home">
     <img src="/assets/dcsr-logo.jpg" width="52" height="52" alt="" />
@@ -166,6 +175,26 @@ function Hero() {
         <span>CUSTOMER NOTE / 2023</span>
         <blockquote>“SuperB! Affordable but QUALITY service. 3 years and counting customer here 😊”</blockquote>
         <strong>Aileen Zapanta</strong>
+      </div>
+    </div>
+  </section>;
+}
+
+function BrandMarquee() {
+  const [paused, setPaused] = useState(false);
+
+  return <section className={`brand-marquee${paused ? ' is-paused' : ''}`} aria-label="Aircon and appliance brands DCSR works with">
+    <div className="brand-marquee-inner">
+      <p className="brand-marquee-label">BRANDS DCSR WORKS WITH</p>
+      <button className="brand-marquee-control" type="button" aria-label={paused ? 'Play brand marquee' : 'Pause brand marquee'} aria-pressed={paused} onClick={() => setPaused(!paused)}>{paused ? 'Play' : 'Pause'}</button>
+      <div className="brand-marquee-rows">
+        {[brands.slice(0, 9), brands.slice(9)].map((row, rowIndex) => <div className={`brand-marquee-window${rowIndex ? ' is-reverse' : ''}`} key={rowIndex}>
+          <div className="brand-marquee-track">
+            {[0, 1].map((copy) => <ul className="brand-marquee-list" key={copy} aria-hidden={copy === 1 ? 'true' : undefined}>
+              {row.map(([name, file]) => <li key={name}><img className={`brand-logo brand-logo--${file.split('.')[0]}`} src={`/assets/brands/${file}`} alt={copy ? '' : name} /></li>)}
+            </ul>)}
+          </div>
+        </div>)}
       </div>
     </div>
   </section>;
@@ -431,7 +460,7 @@ export default function App() {
     <div inert={showPreloader}>
       <a className="skip-link" href="#main">Skip to content</a>
       <Header />
-      <main id="main"><Hero /><Services /><About /><Steps /><Reviews /><Booking /><Faq /><FinalCta /></main>
+      <main id="main"><Hero /><BrandMarquee /><Services /><About /><Steps /><Reviews /><Booking /><Faq /><FinalCta /></main>
       <Footer />
       <MobileMessenger />
     </div>
