@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import Cal, { getCalApi } from '@calcom/embed-react';
 
-const MESSENGER = 'https://m.me/zzzbhbp30';
 const FACEBOOK = 'https://www.facebook.com/zzzbhbp30';
 const REVIEWS = `${FACEBOOK}/reviews`;
 const PHONE = '0947-499-2273';
@@ -16,25 +15,25 @@ const services = [
     number: '01 / INSTALLATION', title: 'Installation services',
     image: '/assets/service-installation-3d.webp',
     description: 'Ask DCSR about installing an air conditioning unit for your space.',
-    link: 'Ask about installation', label: 'Ask about aircon installation on Messenger',
+    link: 'Ask about installation', label: 'Ask about aircon installation on Facebook',
   },
   {
     number: '02 / AIRCON UNITS', title: 'Sale & supply of aircon units',
     image: '/assets/service-aircon-3d.webp',
     description: 'Get in touch about air conditioning units available for your needs.',
-    link: 'Ask about units', label: 'Ask about air conditioning units on Messenger',
+    link: 'Ask about units', label: 'Ask about air conditioning units on Facebook',
   },
   {
     number: '03 / CLEANING', title: 'General cleaning',
     image: '/assets/service-cleaning-3d.webp',
     description: 'Discuss cleaning for your air conditioning unit and share its current condition.',
-    link: 'Ask about cleaning', label: 'Ask about aircon cleaning on Messenger',
+    link: 'Ask about cleaning', label: 'Ask about aircon cleaning on Facebook',
   },
   {
     number: '04 / REPAIR', title: 'Maintenance & repair',
     image: '/assets/service-maintenance-3d.webp',
     description: 'Tell DCSR what is happening with your aircon or refrigeration equipment.',
-    link: 'Ask about repair', label: 'Ask about maintenance and repair on Messenger',
+    link: 'Ask about repair', label: 'Ask about maintenance and repair on Facebook',
   },
 ];
 
@@ -43,11 +42,11 @@ const steps = [
   ['Share your unit', 'The type or model, if you know it.'],
   ['Describe the issue', 'What changed, and a photo if useful.'],
   ['Add your location', 'Your city or barangay helps with availability.'],
-  ['Send your message', 'Continue the conversation on Messenger.'],
+  ['Visit our page', 'Continue with DCSR on Facebook.'],
 ];
 
 const faqs = [
-  ['How do I request a service?', 'Use any “Message DCSR” link on this page. It opens DCSR’s Messenger conversation so you can explain your concern.'],
+  ['How do I request a service?', 'Use any “Visit DCSR on Facebook” link on this page. It opens DCSR’s official Facebook page so you can send your inquiry.'],
   ['What services does DCSR offer?', 'DCSR lists installation, sale and supply of air conditioning units, general cleaning, and maintenance and repair for air conditioning and refrigeration.'],
   ['What should I include in my message?', 'Share the type of unit, the issue you noticed, your location, and any useful photos. DCSR can follow up about the details.'],
   ['Where is DCSR based?', 'DCSR lists its address as 905 San Felipe St., Brgy. Lawy, Capas, Tarlac. For service coverage, send your location and ask about availability.'],
@@ -133,7 +132,7 @@ function Header() {
         <a href="#reviews" onClick={() => setMenuOpen(false)}>Reviews</a>
         <a href="#inquire" onClick={() => setMenuOpen(false)}>Inquire</a>
         <a href="#faq" onClick={() => setMenuOpen(false)}>FAQs</a>
-        <a className="button button-small" href={MESSENGER} {...external} onClick={() => setMenuOpen(false)}>Message DCSR <span aria-hidden="true">↗</span></a>
+        <a className="button button-small" href={FACEBOOK} {...external} onClick={() => setMenuOpen(false)}>Visit Facebook <span aria-hidden="true">↗</span></a>
       </nav>
     </div>
   </header>;
@@ -160,9 +159,9 @@ function Hero() {
       <div className="hero-main">
         <p className="hero-kicker">DCSR AIRCON & REFRIGERATION</p>
         <h1 id="hero-title"><span className="hero-line">Aircon trouble?</span><em className="hero-line hero-cool">Bring back the cool.</em></h1>
-        <p className="hero-description">Installation, unit supply, cleaning, maintenance and repair for aircon and refrigeration. Tell DCSR what needs attention on Messenger.</p>
+        <p className="hero-description">Installation, unit supply, cleaning, maintenance and repair for aircon and refrigeration. Visit DCSR’s Facebook page to send your inquiry.</p>
         <div className="hero-actions">
-          <a className="button button-primary" href={MESSENGER} {...external}>Message DCSR <span aria-hidden="true">↗</span></a>
+          <a className="button button-primary" href={FACEBOOK} {...external}>Visit Facebook <span aria-hidden="true">↗</span></a>
           <a className="button button-outline" href="#services">Explore our services <span aria-hidden="true">↗</span></a>
         </div>
       </div>
@@ -239,7 +238,7 @@ function Services() {
           <div className="services-list">
             {services.map((service, index) => <div className={`services-row${index === active ? ' is-active' : ''}`} key={service.number}>
               <button type="button" onClick={() => setActive(index)} onMouseEnter={() => setActive(index)} aria-label={`Show ${service.title}`} aria-pressed={index === active}><span>{service.title}</span><span className="services-row-arrow" aria-hidden="true">↗</span></button>
-              <div className="services-row-detail"><p>{service.description}</p><a href={MESSENGER} {...external} aria-label={service.label}>{service.link} ↗</a></div>
+              <div className="services-row-detail"><p>{service.description}</p><a href={FACEBOOK} {...external} aria-label={service.label}>{service.link} ↗</a></div>
             </div>)}
           </div>
           <p className="services-index">{String(active + 1).padStart(2, '0')} / {String(services.length).padStart(2, '0')}</p>
@@ -260,7 +259,7 @@ function About() {
         <p className="about-approach">DCSR’s business profile highlights trained technicians, modern tools, accurate diagnostics, affordable pricing, and responsive technical support.</p>
         <p className="about-values">Integrity <span>·</span> Excellence <span>·</span> Accountability</p>
         <div className="about-proof"><span>FROM A CUSTOMER REVIEW</span><blockquote>“Very accommodating ng owner and at the same time sya din ang mismong gagawa ng trabaho.”</blockquote><strong>Aileen Nicasio · June 2023</strong></div>
-        <a className="text-link about-link" href={MESSENGER} {...external}>Talk to DCSR about your unit <span aria-hidden="true">↗</span></a>
+        <a className="text-link about-link" href={FACEBOOK} {...external}>Contact DCSR on Facebook <span aria-hidden="true">↗</span></a>
       </div>
     </div>
   </section>;
@@ -279,7 +278,7 @@ function Steps() {
           <span className="step-copy"><strong>{title}</strong><span>{description}</span></span>
         </button>
       </li>)}</ol>
-      <a className="steps-link" href={MESSENGER} {...external}>Start on Messenger <span aria-hidden="true">↗</span></a>
+      <a className="steps-link" href={FACEBOOK} {...external}>Visit DCSR on Facebook <span aria-hidden="true">↗</span></a>
     </div>
   </section>;
 }
@@ -333,8 +332,8 @@ function Booking() {
       </div>
       <div className="booking-frame">
         <div className="booking-frame-head"><span>DCSR / SERVICE INQUIRY</span><span>{CAL_LINK ? 'CHOOSE A TIME' : 'MESSAGE DCSR'}</span></div>
-        {CAL_LINK ? <div className="booking-embed"><CalCalendar /></div> : <div className="booking-pending"><span className="booking-pending-label">DIRECT INQUIRY / MESSENGER</span><h3>Tell us what needs attention.</h3><p>Online scheduling is being prepared. You can send the essentials now and continue directly with DCSR.</p><div className="booking-preview" aria-label="Details to include"><span><b>01</b> Service needed</span><span><b>02</b> Your unit</span><span><b>03</b> Your location</span></div><a className="button button-primary" href={MESSENGER} {...external}>Send an inquiry <span aria-hidden="true">↗</span></a><a className="booking-phone" href={PHONE_LINK}>Or call {PHONE}</a></div>}
-        <div className="booking-frame-foot"><span>{CAL_LINK ? 'An inquiry time is for discussing your concern.' : 'Continue the conversation directly on Messenger.'}</span>{CAL_LINK && <a href={`https://cal.com/${CAL_LINK}`} {...external}>Open calendar separately ↗</a>}</div>
+        {CAL_LINK ? <div className="booking-embed"><CalCalendar /></div> : <div className="booking-pending"><span className="booking-pending-label">DIRECT INQUIRY / FACEBOOK</span><h3>Tell us what needs attention.</h3><p>Online scheduling is being prepared. You can send the essentials now through DCSR’s Facebook page.</p><div className="booking-preview" aria-label="Details to include"><span><b>01</b> Service needed</span><span><b>02</b> Your unit</span><span><b>03</b> Your location</span></div><a className="button button-primary" href={FACEBOOK} {...external}>Visit Facebook <span aria-hidden="true">↗</span></a><a className="booking-phone" href={PHONE_LINK}>Or call {PHONE}</a></div>}
+        <div className="booking-frame-foot"><span>{CAL_LINK ? 'An inquiry time is for discussing your concern.' : 'Continue with DCSR on Facebook.'}</span>{CAL_LINK && <a href={`https://cal.com/${CAL_LINK}`} {...external}>Open calendar separately ↗</a>}</div>
       </div>
     </div>
   </section>;
@@ -343,7 +342,7 @@ function Booking() {
 function Faq() {
   return <section className="section faq" id="faq" aria-labelledby="faq-title">
     <div className="container faq-grid">
-      <div data-reveal><p className="section-kicker">06 / GOOD TO KNOW</p><h2 id="faq-title">A few questions,<br /><em>answered.</em></h2><p>Need something more specific? DCSR is one Messenger conversation away.</p></div>
+      <div data-reveal><p className="section-kicker">06 / GOOD TO KNOW</p><h2 id="faq-title">A few questions,<br /><em>answered.</em></h2><p>Need something more specific? Visit DCSR’s Facebook page.</p></div>
       <div className="faq-list" data-reveal>{faqs.map(([question, answer], index) => <details key={question}><summary><small>{String(index + 1).padStart(2, '0')}</small>{question} <span aria-hidden="true">+</span></summary><p>{answer}</p></details>)}</div>
     </div>
   </section>;
@@ -354,7 +353,7 @@ function FinalCta() {
     <div className="final-cta-shade" aria-hidden="true" />
     <div className="container final-cta-inner">
       <p className="section-kicker">READY WHEN YOU ARE</p>
-      <div className="final-cta-bottom"><h2 id="final-title">A cooler room<br />starts here.</h2><div><p>Tell DCSR what needs attention, then continue the conversation on Messenger.</p><a className="button button-primary" href={MESSENGER} {...external}>Message DCSR <span aria-hidden="true">↗</span></a></div></div>
+      <div className="final-cta-bottom"><h2 id="final-title">A cooler room<br />starts here.</h2><div><p>Tell DCSR what needs attention through the official Facebook page.</p><a className="button button-primary" href={FACEBOOK} {...external}>Visit Facebook <span aria-hidden="true">↗</span></a></div></div>
     </div>
   </section>;
 }
@@ -362,10 +361,10 @@ function FinalCta() {
 function Footer() {
   return <footer className="site-footer">
     <div className="footer-frame">
-      <div className="footer-top"><Brand /><a href={MESSENGER} {...external}>Message DCSR <span aria-hidden="true">↗</span></a></div>
+      <div className="footer-top"><Brand /><a href={FACEBOOK} {...external}>Visit Facebook <span aria-hidden="true">↗</span></a></div>
       <div className="footer-main">
         <div><h2>Explore</h2><a href="#services">Services</a><a href="#about">About DCSR</a><a href="#reviews">Reviews</a><a href="#inquire">Inquire</a><a href="#faq">FAQs</a></div>
-        <div><h2>Connect</h2><a href={MESSENGER} {...external}>Messenger ↗</a><a href={FACEBOOK} {...external}>Facebook page ↗</a><a href={REVIEWS} {...external}>Customer reviews ↗</a></div>
+        <div><h2>Connect</h2><a href={FACEBOOK} {...external}>Facebook page ↗</a><a href={REVIEWS} {...external}>Customer reviews ↗</a></div>
         <div className="footer-inquiry"><h2>Contact DCSR</h2><address><a href={PHONE_LINK}>{PHONE}</a><a href={`mailto:${EMAIL}`}>{EMAIL}</a><span>905 San Felipe St., Brgy. Lawy,<br />Capas, Tarlac</span></address><p>Dickson J. Gutierrez · Owner</p></div>
       </div>
       <div className="footer-signature" aria-hidden="true">DCSR</div>
@@ -374,7 +373,7 @@ function Footer() {
   </footer>;
 }
 
-function MobileMessenger() {
+function MobileFacebook() {
   const [show, setShow] = useState(false);
   useEffect(() => {
     const sections = [document.querySelector('.hero'), document.querySelector('.booking-section'), document.querySelector('.final-cta'), document.querySelector('.site-footer')];
@@ -386,7 +385,7 @@ function MobileMessenger() {
     sections.forEach((section) => observer.observe(section));
     return () => observer.disconnect();
   }, []);
-  return <a className={`mobile-messenger${show ? ' is-visible' : ''}`} href={MESSENGER} {...external}>Message DCSR <span aria-hidden="true">↗</span></a>;
+  return <a className={`mobile-messenger${show ? ' is-visible' : ''}`} href={FACEBOOK} {...external}>Visit Facebook <span aria-hidden="true">↗</span></a>;
 }
 
 function Preloader({ exiting }) {
@@ -462,7 +461,7 @@ export default function App() {
       <Header />
       <main id="main"><Hero /><BrandMarquee /><Services /><About /><Steps /><Reviews /><Booking /><Faq /><FinalCta /></main>
       <Footer />
-      <MobileMessenger />
+      <MobileFacebook />
     </div>
   </>;
 }
