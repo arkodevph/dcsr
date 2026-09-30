@@ -21,7 +21,7 @@
 .preloader-fan span:nth-child(3) { transform: rotate(180deg); }
 .preloader-fan span:nth-child(4) { transform: rotate(270deg); }
 .preloader-fan i { position: absolute; top: 32px; left: 32px; width: 14px; height: 14px; border: 2px solid #fff; border-radius: 50%; background: #57bde9; }
-.preloader-wordmark { font-family: "Outfit", Arial, sans-serif; font-size: clamp(4.5rem, 11vw, 8.5rem); font-weight: 800; letter-spacing: -.09em; line-height: .85; }
+.preloader-wordmark { max-width: min(900px, 82vw); font-family: "Outfit", Arial, sans-serif; font-size: clamp(1.7rem, 4.8vw, 4.7rem); font-weight: 800; letter-spacing: -.055em; line-height: .92; text-align: center; text-transform: uppercase; }
 .preloader-content p { margin: 15px 0 31px; color: #c3e5f8; font-size: clamp(.61rem, 1.3vw, .78rem); font-weight: 800; letter-spacing: .22em; }
 .preloader-air { width: 180px; height: 42px; overflow: visible; }
 .preloader-air path { fill: none; stroke: #b5eaff; stroke-width: 2; stroke-linecap: round; animation: preloader-breeze 1s ease-in-out infinite alternate; }

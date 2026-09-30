@@ -92,7 +92,7 @@ const brands = [
 function Brand() {
   return <a className="brand" href="#top" aria-label="DCSR home">
     <img src="/assets/dcsr-logo.jpg" width="52" height="52" alt="" />
-    <span className="brand-name">DCSR<span>Aircon &amp; Refrigeration Repair Services</span></span>
+    <span className="brand-name">DCSR Aircon &amp; Refrigeration Repair Services</span>
   </a>;
 }
 
@@ -511,7 +511,7 @@ function Footer() {
         <div><h2>Connect</h2><a href={FACEBOOK} {...external}>Facebook page ↗</a><a href={REVIEWS} {...external}>Customer reviews ↗</a></div>
         <div className="footer-inquiry"><h2>Contact DCSR</h2><address><a href={PHONE_LINK}>{PHONE}</a><a href={`mailto:${EMAIL}`}>{EMAIL}</a><span>905 San Felipe St., Brgy. Lawy,<br />Capas, Tarlac</span></address><p>Dickson J. Gutierrez · Owner</p></div>
       </div>
-      <div className="footer-signature" aria-hidden="true">DCSR</div>
+      <div className="footer-signature" aria-hidden="true">DCSR Aircon &amp; Refrigeration Repair Services</div>
       <div className="footer-bottom"><span>© {new Date().getFullYear()} DCSR Aircon & Refrigeration Repair Services</span><span>Installation · Unit supply · Cleaning · Maintenance &amp; repair</span></div>
     </div>
   </footer>;
@@ -549,7 +549,7 @@ function Preloader({ exiting }) {
     </svg>
     <div className="preloader-content" aria-hidden="true">
       <div className="preloader-fan"><span></span><span></span><span></span><span></span><i></i></div>
-      <div className="preloader-wordmark">DCSR</div>
+      <div className="preloader-wordmark">DCSR Aircon &amp; Refrigeration Repair Services</div>
       <p>AIRCON &amp; REFRIGERATION</p>
       <svg className="preloader-air" viewBox="0 0 180 42" aria-hidden="true">
         <path d="M16 10 C52 0 100 20 164 9" />
