@@ -512,7 +512,7 @@ function Footer() {
         <div className="footer-inquiry"><h2>Contact DCSR</h2><address><a href={PHONE_LINK}>{PHONE}</a><a href={`mailto:${EMAIL}`}>{EMAIL}</a><span>905 San Felipe St., Brgy. Lawy,<br />Capas, Tarlac</span></address><p>Dickson J. Gutierrez · Owner</p></div>
       </div>
       <div className="footer-signature" aria-hidden="true">DCSR Aircon &amp; Refrigeration Repair Services</div>
-      <div className="footer-bottom"><span>© {new Date().getFullYear()} DCSR Aircon & Refrigeration Repair Services</span><span>Installation · Unit supply · Cleaning · Maintenance &amp; repair</span></div>
+      <div className="footer-bottom"><span>© {new Date().getFullYear()} DCSR Aircon & Refrigeration Repair Services</span><span>Installation · Unit supply · Cleaning · Maintenance &amp; repair</span><a className="footer-credit" href="https://arkodevph.com" target="_blank" rel="noopener noreferrer">by Arkodev</a></div>
     </div>
   </footer>;
 }
