@@ -321,19 +321,163 @@ function CalCalendar() {
   return <Cal className="cal-inline" calLink={CAL_LINK} config={{ layout: 'month_view', theme: 'light' }} />;
 }
 
+function JobRequestForm() {
+  const [step, setStep] = useState(1);
+  const [calendarMonth, setCalendarMonth] = useState(() => {
+    const date = new Date();
+    return new Date(date.getFullYear(), date.getMonth(), 1);
+  });
+  const [calendarError, setCalendarError] = useState(false);
+  const [request, setRequest] = useState({
+    name: '', phone: '', email: '', service: '', location: '', unit: '', concern: '', date: '', time: '',
+  });
+  const stepHeading = useRef(null);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const calendarStart = new Date(calendarMonth.getFullYear(), calendarMonth.getMonth(), 1 - calendarMonth.getDay());
+  const calendarDays = Array.from({ length: 42 }, (_, index) => {
+    const date = new Date(calendarStart);
+    date.setDate(calendarStart.getDate() + index);
+    return date;
+  });
+  const dateValue = (date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+
+  const updateRequest = (event) => setRequest((current) => ({ ...current, [event.target.name]: event.target.value }));
+  const showStep = (nextStep) => {
+    setStep(nextStep);
+    window.requestAnimationFrame(() => stepHeading.current?.focus());
+  };
+  const submitStep = (event) => {
+    event.preventDefault();
+    if (step === 2 && !request.date) {
+      setCalendarError(true);
+      document.querySelector('.job-request-days button:not(:disabled)')?.focus();
+      return;
+    }
+    if (step < 3) {
+      showStep(step + 1);
+      return;
+    }
+
+    const preferredDate = new Date(`${request.date}T12:00:00`).toLocaleDateString('en-PH', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    const subject = `Job request: ${request.service} — ${request.name}`;
+    const body = [
+      `Name: ${request.name}`,
+      `Phone: ${request.phone}`,
+      `Email: ${request.email || 'Not provided'}`,
+      `Service: ${request.service}`,
+      `Location: ${request.location}`,
+      `Unit type / model: ${request.unit || 'Not sure'}`,
+      `Preferred date: ${preferredDate}`,
+      `Preferred time: ${request.time}`,
+      '',
+      'Concern:',
+      request.concern,
+    ].join('\n');
+
+    window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  };
+
+  const preferredDate = request.date ? new Date(`${request.date}T12:00:00`).toLocaleDateString('en-PH', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) : '';
+
+  return <form className="job-request-form" onSubmit={submitStep}>
+    <ol className="job-request-progress" aria-label="Job request progress">
+      {['Your details', 'Preferred schedule', 'Confirm request'].map((label, index) => {
+        const number = index + 1;
+        return <li className={`${number === step ? 'is-current' : ''}${number < step ? ' is-complete' : ''}`} key={label} aria-current={number === step ? 'step' : undefined}>
+          <button type="button" disabled={number >= step} onClick={() => showStep(number)}><span>{String(number).padStart(2, '0')}</span>{label}</button>
+        </li>;
+      })}
+    </ol>
+
+    <div className="job-request-panel">
+      {step === 1 && <div className="job-request-step">
+        <div className="job-request-intro">
+          <span>STEP 01 / DETAILS</span>
+          <h3 ref={stepHeading} tabIndex="-1">What can DCSR help with?</h3>
+          <p>Start with the information needed to understand and follow up on your request.</p>
+        </div>
+        <div className="job-request-fields">
+          <label><span>Full name *</span><input name="name" type="text" autoComplete="name" value={request.name} onChange={updateRequest} required /></label>
+          <label><span>Phone number *</span><input name="phone" type="tel" autoComplete="tel" inputMode="tel" value={request.phone} onChange={updateRequest} required /></label>
+          <label><span>Email</span><input name="email" type="email" autoComplete="email" value={request.email} onChange={updateRequest} /></label>
+          <label><span>Service needed *</span><select name="service" value={request.service} onChange={updateRequest} required><option value="" disabled>Choose a service</option><option>Installation</option><option>Aircon unit supply</option><option>General cleaning</option><option>Maintenance</option><option>Repair</option><option>Refrigeration service</option><option>Other</option></select></label>
+          <label><span>City or barangay *</span><input name="location" type="text" autoComplete="address-level2" value={request.location} onChange={updateRequest} required /></label>
+          <label><span>Unit type or model</span><input name="unit" type="text" placeholder="Split type, window type, refrigerator…" value={request.unit} onChange={updateRequest} /></label>
+          <label className="job-request-wide"><span>Describe the concern *</span><textarea name="concern" rows="4" placeholder="What happened, when it started, and anything DCSR should know" value={request.concern} onChange={updateRequest} required /></label>
+        </div>
+      </div>}
+
+      {step === 2 && <div className="job-request-step">
+        <div className="job-request-intro">
+          <span>STEP 02 / CALENDAR</span>
+          <h3 ref={stepHeading} tabIndex="-1">When would you prefer a visit?</h3>
+          <p>Choose a preferred date and time window. DCSR will confirm the actual schedule with you.</p>
+        </div>
+        <div className="job-request-calendar">
+          <div className="job-request-date">
+            <div className="job-request-calendar-head">
+              <button type="button" aria-label="Previous month" disabled={calendarMonth.getFullYear() === today.getFullYear() && calendarMonth.getMonth() === today.getMonth()} onClick={() => setCalendarMonth(new Date(calendarMonth.getFullYear(), calendarMonth.getMonth() - 1, 1))}>←</button>
+              <strong>{calendarMonth.toLocaleDateString('en-PH', { month: 'long', year: 'numeric' })}</strong>
+              <button type="button" aria-label="Next month" onClick={() => setCalendarMonth(new Date(calendarMonth.getFullYear(), calendarMonth.getMonth() + 1, 1))}>→</button>
+            </div>
+            <div className="job-request-weekdays" aria-hidden="true">{['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].map((day) => <span key={day}>{day}</span>)}</div>
+            <div className="job-request-days" role="group" aria-label="Choose a preferred date">
+              {calendarDays.map((date) => {
+                const value = dateValue(date);
+                const outsideMonth = date.getMonth() !== calendarMonth.getMonth();
+                const unavailable = date < today || outsideMonth;
+                return <button type="button" key={value} disabled={unavailable} className={request.date === value ? 'is-selected' : ''} aria-pressed={request.date === value} aria-label={date.toLocaleDateString('en-PH', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })} onClick={() => { setRequest((current) => ({ ...current, date: value })); setCalendarError(false); }}>{date.getDate()}</button>;
+              })}
+            </div>
+            <p className={calendarError ? 'is-error' : ''} role="status">{request.date ? `Selected: ${new Date(`${request.date}T12:00:00`).toLocaleDateString('en-PH', { weekday: 'long', month: 'long', day: 'numeric' })}` : calendarError ? 'Choose a preferred date to continue.' : 'Select a preferred date'}</p>
+          </div>
+          <fieldset className="job-request-times"><legend>Preferred time *</legend>
+            {['Morning · 8 AM–12 PM', 'Afternoon · 1–5 PM', 'Flexible · Any available time'].map((time) => <label key={time}><input type="radio" name="time" value={time} checked={request.time === time} onChange={updateRequest} required /><span>{time}</span></label>)}
+          </fieldset>
+          <p className="job-request-calendar-note">This is a scheduling preference, not a confirmed appointment.</p>
+        </div>
+      </div>}
+
+      {step === 3 && <div className="job-request-step">
+        <div className="job-request-intro">
+          <span>STEP 03 / CONFIRMATION</span>
+          <h3 ref={stepHeading} tabIndex="-1">Review your job request.</h3>
+          <p>Check the details before preparing the email to DCSR. You can return to either step to make changes.</p>
+        </div>
+        <dl className="job-request-summary">
+          <div><dt>Customer</dt><dd>{request.name}<span>{request.phone}{request.email ? ` · ${request.email}` : ''}</span></dd></div>
+          <div><dt>Service</dt><dd>{request.service}<span>{request.unit || 'Unit type not specified'}</span></dd></div>
+          <div><dt>Location</dt><dd>{request.location}</dd></div>
+          <div><dt>Preferred schedule</dt><dd>{preferredDate}<span>{request.time}</span></dd></div>
+          <div className="job-request-summary-wide"><dt>Concern</dt><dd>{request.concern}</dd></div>
+        </dl>
+        <p className="job-request-confirmation">Submitting prepares an email addressed to {EMAIL}. The request is complete only after you send it from your email app. DCSR will confirm availability separately.</p>
+      </div>}
+    </div>
+
+    <div className="job-request-actions">
+      {step > 1 && <button className="job-request-back" type="button" onClick={() => showStep(step - 1)}>← Back</button>}
+      <button className="button button-primary" type="submit">{step === 3 ? 'Prepare email request' : 'Continue'} <span aria-hidden="true">{step === 3 ? '↗' : '→'}</span></button>
+      {step === 1 && <a href={PHONE_LINK}>Prefer to call? {PHONE}</a>}
+    </div>
+  </form>;
+}
+
 function Booking() {
   return <section className="booking-section" id="inquire" aria-labelledby="booking-title">
     <div className="container booking-grid">
       <div className="booking-copy" data-reveal>
         <p className="section-kicker section-kicker-light">05 / SERVICE INQUIRY</p>
-        <h2 id="booking-title">Tell us the issue.<br /><em>{CAL_LINK ? 'Find time to talk.' : 'Start the conversation.'}</em></h2>
-        <p>{CAL_LINK ? 'Choose a time to discuss installation, unit supply, cleaning, maintenance, or repair. DCSR can confirm the details and availability with you afterward.' : 'Begin with a short message about the service you need and your unit. DCSR can discuss the details and next steps with you directly.'}</p>
+        <h2 id="booking-title">Tell us the issue.<br /><em>{CAL_LINK ? 'Find time to talk.' : 'Request a service.'}</em></h2>
+        <p>{CAL_LINK ? 'Choose a time to discuss installation, unit supply, cleaning, maintenance, or repair. DCSR can confirm the details and availability with you afterward.' : 'Share the service you need, your location, and what is happening with your unit. DCSR will use these details to understand the request.'}</p>
         {CAL_LINK && <div className="booking-prep"><span>WHAT TO HAVE READY</span><ul><li>Type of unit or service needed</li><li>What you have noticed</li><li>Your city or barangay</li></ul></div>}
       </div>
       <div className="booking-frame">
-        <div className="booking-frame-head"><span>DCSR / SERVICE INQUIRY</span><span>{CAL_LINK ? 'CHOOSE A TIME' : 'MESSAGE DCSR'}</span></div>
-        {CAL_LINK ? <div className="booking-embed"><CalCalendar /></div> : <div className="booking-pending"><span className="booking-pending-label">DIRECT INQUIRY / FACEBOOK</span><h3>Tell us what needs attention.</h3><p>Online scheduling is being prepared. You can send the essentials now through DCSR’s Facebook page.</p><div className="booking-preview" aria-label="Details to include"><span><b>01</b> Service needed</span><span><b>02</b> Your unit</span><span><b>03</b> Your location</span></div><a className="button button-primary" href={FACEBOOK} {...external}>Visit Facebook <span aria-hidden="true">↗</span></a><a className="booking-phone" href={PHONE_LINK}>Or call {PHONE}</a></div>}
-        <div className="booking-frame-foot"><span>{CAL_LINK ? 'An inquiry time is for discussing your concern.' : 'Continue with DCSR on Facebook.'}</span>{CAL_LINK && <a href={`https://cal.com/${CAL_LINK}`} {...external}>Open calendar separately ↗</a>}</div>
+        <div className="booking-frame-head"><span>DCSR / SERVICE INQUIRY</span><span>{CAL_LINK ? 'CHOOSE A TIME' : 'JOB REQUEST FORM'}</span></div>
+        {CAL_LINK ? <div className="booking-embed"><CalCalendar /></div> : <JobRequestForm />}
+        <div className="booking-frame-foot"><span>{CAL_LINK ? 'An inquiry time is for discussing your concern.' : `Requests are prepared for ${EMAIL}.`}</span>{CAL_LINK && <a href={`https://cal.com/${CAL_LINK}`} {...external}>Open calendar separately ↗</a>}</div>
       </div>
     </div>
   </section>;
