@@ -11,25 +11,30 @@ const external = { target: '_blank', rel: 'noopener noreferrer' };
 const services = [
   {
     number: '01 / AIRCON', title: 'Aircon repair',
+    image: '/assets/service-aircon-3d.webp',
     description: 'Tell us what your unit is doing, or what it isn’t. Start a conversation about repair through Messenger.',
     link: 'Ask about repair', label: 'Ask about aircon repair on Messenger',
   },
   {
     number: '02 / REFRIGERATION', title: 'Refrigeration repair',
+    image: '/assets/service-refrigeration-3d.webp',
     description: 'Get in touch about refrigeration equipment that needs inspection or repair.',
     link: 'Ask about repair', label: 'Ask about refrigeration repair on Messenger',
   },
   {
     number: '03 / UPKEEP', title: 'Maintenance',
+    image: '/assets/service-maintenance-3d.webp',
     description: 'Ask about maintenance for your aircon or refrigeration system and share its current condition.',
     link: 'Ask about maintenance', label: 'Ask about maintenance on Messenger',
   },
 ];
 
 const steps = [
-  ['Tell us your unit type', 'Let DCSR know if your concern is about an aircon or refrigeration unit.'],
-  ['Describe the issue', 'Share what you’ve noticed, and add a photo if it helps explain the problem.'],
-  ['Continue on Messenger', 'Ask about service details, availability, and your location directly with DCSR.'],
+  ['Choose a concern', 'Repair, refrigeration, or maintenance.'],
+  ['Share your unit', 'The type or model, if you know it.'],
+  ['Describe the issue', 'What changed, and a photo if useful.'],
+  ['Add your location', 'Your city or barangay helps with availability.'],
+  ['Send your message', 'Continue the conversation on Messenger.'],
 ];
 
 const faqs = [
@@ -157,20 +162,50 @@ function Hero() {
 }
 
 function Services() {
-  return <section className="section services" id="services" aria-labelledby="services-title">
-    <div className="container">
-      <div className="section-heading services-heading" data-reveal>
-        <div><p className="section-kicker">01 / SERVICES</p><h2 id="services-title">Cooling care,<br /><em>considered.</em></h2></div>
-        <p>Find the concern that sounds familiar. DCSR can help you start the right conversation about repair or upkeep.</p>
+  const sectionRef = useRef(null);
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      if (window.innerWidth <= 820 || !sectionRef.current) return;
+      const section = sectionRef.current;
+      const distance = section.offsetHeight - window.innerHeight;
+      if (distance <= 0) return;
+      const progress = Math.max(0, Math.min(1, -section.getBoundingClientRect().top / distance));
+      setActive(Math.round(progress * (services.length - 1)));
+    };
+    const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    update();
+    return () => {
+      window.removeEventListener('scroll', schedule);
+      window.removeEventListener('resize', schedule);
+      cancelAnimationFrame(frame);
+    };
+  }, []);
+
+  return <section className="services" id="services" ref={sectionRef} aria-labelledby="services-title">
+    <div className="services-stage">
+      <div className="container services-inner">
+        <p className="section-kicker services-label">01 / OUR SERVICES</p>
+        <div className="services-visual" aria-hidden="true">
+          {services.map((service, index) => <img key={service.number} className={index === active ? 'is-active' : ''} src={service.image} alt="" />)}
+          <span className="services-visual-caption">DCSR / {services[active].number}</span>
+        </div>
+        <div className="services-content">
+          <div className="services-heading"><h2 id="services-title">Care for every<br />cooling concern.</h2><p>Repair and upkeep for aircon and refrigeration units. Choose what needs attention.</p></div>
+          <div className="services-list">
+            {services.map((service, index) => <div className={`services-row${index === active ? ' is-active' : ''}`} key={service.number}>
+              <button type="button" onClick={() => setActive(index)} onMouseEnter={() => setActive(index)} aria-label={`Show ${service.title}`} aria-pressed={index === active}><span>{service.title}</span><span className="services-row-arrow" aria-hidden="true">↗</span></button>
+              <div className="services-row-detail"><p>{service.description}</p><a href={MESSENGER} {...external} aria-label={service.label}>{service.link} ↗</a></div>
+            </div>)}
+          </div>
+          <p className="services-index">{String(active + 1).padStart(2, '0')} / {String(services.length).padStart(2, '0')}</p>
+        </div>
       </div>
-      <div className="service-stream">
-        {services.map((service, index) => <article className={`service-flow service-flow-${index + 1}`} key={service.number} data-reveal>
-          <div className="service-flow-symbol" aria-hidden="true"><span>{service.number.slice(0, 2)}</span></div>
-          <div className="service-flow-copy"><span>{service.number.slice(5)}</span><h3>{service.title}</h3><p>{service.description}</p></div>
-          <a href={MESSENGER} {...external} aria-label={service.label}><span>{service.link}</span><span className="service-flow-arrow" aria-hidden="true">↗</span></a>
-        </article>)}
-      </div>
-      <p className="service-footnote">A different cooling concern? <a href={MESSENGER} {...external}>Tell DCSR what is happening <span aria-hidden="true">↗</span></a></p>
     </div>
   </section>;
 }
@@ -191,26 +226,46 @@ function About() {
 }
 
 function Steps() {
+  const [active, setActive] = useState(2);
+
   return <section className="section steps" aria-labelledby="steps-title">
     <div className="container">
-      <div className="steps-intro" data-reveal><div><p className="section-kicker">03 / THE PROCESS</p><h2 id="steps-title">A clear way<br /><em>to begin.</em></h2></div><div><p>Start with what you know. A few useful details help DCSR understand your concern and follow up.</p><a className="text-link text-link-blue" href={MESSENGER} {...external}>Open Messenger <span aria-hidden="true">↗</span></a></div></div>
-      <ol className="steps-list">{steps.map(([title, description], index) => <li key={title} data-reveal><span>{String(index + 1).padStart(2, '0')}</span><div><h3>{title}</h3><p>{description}</p></div></li>)}</ol>
+      <div className="steps-heading"><p className="section-kicker">03 / HOW IT WORKS</p><div><h2 id="steps-title">From concern to<br />conversation in 5 steps.</h2><p>Gather a few details, then send DCSR a message.</p></div></div>
+      <ol className="steps-list">{steps.map(([title, description], index) => <li key={title} className={index === active ? 'is-featured' : ''}>
+        <button type="button" className="step-trigger" aria-expanded={index === active} onMouseEnter={() => setActive(index)} onMouseLeave={() => setActive(2)} onFocus={() => setActive(index)} onClick={() => setActive(index)}>
+          <span className="step-index">{String(index + 1).padStart(2, '0')}.</span>
+          <span className="step-symbol" aria-hidden="true">{index === 4 ? '↗' : '✳'}</span>
+          <span className="step-copy"><strong>{title}</strong><span>{description}</span></span>
+        </button>
+      </li>)}</ol>
+      <a className="steps-link" href={MESSENGER} {...external}>Start on Messenger <span aria-hidden="true">↗</span></a>
     </div>
   </section>;
 }
 
 function Reviews() {
+  const [active, setActive] = useState(0);
+  const move = (direction) => setActive((current) => (current + direction + reviews.length) % reviews.length);
+
   return <section className="reviews" id="reviews" aria-labelledby="reviews-title">
-    <div className="container reviews-grid">
-      <div className="reviews-intro" data-reveal><p className="section-kicker">04 / CUSTOMER VOICES</p><h2 id="reviews-title">The work<br /><em>speaks through them.</em></h2><p>Customers shared these recommendations on DCSR’s Facebook page. Their words say more than a sales pitch.</p><a className="button button-primary" href={REVIEWS} {...external}>Read reviews on Facebook <span aria-hidden="true">↗</span></a><span className="reviews-count">06 / RECOMMENDATIONS SHARED</span></div>
-      <div className="review-stack" data-reveal>
-        {reviews.map((review, index) => <article className="review-card" key={review.name}>
-          <div className="review-card-head"><span>REVIEW / {String(index + 1).padStart(2, '0')}</span><span>FACEBOOK RECOMMENDATION</span></div>
+    <div className="container reviews-heading"><p className="section-kicker">04 / CUSTOMER VOICES</p><h2 id="reviews-title">What our customers say</h2><p>Real recommendations shared with DCSR on Facebook.</p></div>
+    <div className="reviews-carousel" aria-label="Customer reviews">
+      {reviews.map((review, index) => {
+        const rawOffset = (index - active + reviews.length) % reviews.length;
+        const offset = rawOffset > reviews.length / 2 ? rawOffset - reviews.length : rawOffset;
+        return <article className={`review-slide${offset === 0 ? ' is-current' : ''}`} key={review.name} style={{ '--offset': offset, '--distance': Math.abs(offset), zIndex: reviews.length - Math.abs(offset) }} aria-hidden={Math.abs(offset) > 2}>
+          <div className="review-slide-top"><span>FACEBOOK RECOMMENDATION</span><span>{String(index + 1).padStart(2, '0')} / 06</span></div>
           <blockquote>“{review.quote}”</blockquote>
-          <div className="review-card-foot"><strong>{review.name}</strong>{review.date && <span>{review.date}{review.excerpt ? ' · Excerpt' : ''}</span>}</div>
-        </article>)}
-      </div>
+          <div className="review-slide-person"><span className="review-initials" aria-hidden="true">{review.name.split(' ').slice(0, 2).map((part) => part[0]).join('')}</span><div><strong>{review.name}</strong><span>{review.date || 'Customer review'}{review.excerpt ? ' · Excerpt' : ''}</span></div></div>
+        </article>;
+      })}
     </div>
+    <div className="reviews-controls">
+      <button type="button" onClick={() => move(-1)} aria-label="Previous review">←</button>
+      <div className="review-dots" aria-label="Choose a review">{reviews.map((review, index) => <button type="button" key={review.name} className={index === active ? 'is-active' : ''} onClick={() => setActive(index)} aria-label={`Show review by ${review.name}`} aria-current={index === active ? 'true' : undefined} />)}</div>
+      <button type="button" onClick={() => move(1)} aria-label="Next review">→</button>
+    </div>
+    <a className="reviews-source" href={REVIEWS} {...external}>Read the recommendations on Facebook <span aria-hidden="true">↗</span></a>
   </section>;
 }
 
@@ -255,19 +310,26 @@ function Faq() {
 
 function FinalCta() {
   return <section className="final-cta" aria-labelledby="final-title">
-    <div className="container final-cta-inner"><div data-reveal><p className="section-kicker">READY WHEN YOU ARE</p><h2 id="final-title">Cool again<br /><em>starts here.</em></h2><p>Tell DCSR what’s happening with your aircon or refrigeration unit.</p><a className="button button-primary button-large" href={MESSENGER} {...external}>Message DCSR on Messenger <span aria-hidden="true">↗</span></a></div></div>
+    <div className="final-cta-shade" aria-hidden="true" />
+    <div className="container final-cta-inner">
+      <p className="section-kicker">READY WHEN YOU ARE</p>
+      <div className="final-cta-bottom"><h2 id="final-title">A cooler room<br />starts here.</h2><div><p>Tell DCSR what needs attention, then continue the conversation on Messenger.</p><a className="button button-primary" href={MESSENGER} {...external}>Message DCSR <span aria-hidden="true">↗</span></a></div></div>
+    </div>
   </section>;
 }
 
 function Footer() {
   return <footer className="site-footer">
-    <div className="container footer-main">
-      <div className="footer-brand"><Brand /><p>Your Technical Partner & Quality Serviced</p></div>
-      <div><h2>Explore</h2><a href="#services">Services</a><a href="#about">About DCSR</a><a href="#reviews">Reviews</a><a href="#inquire">Inquire</a><a href="#faq">FAQs</a></div>
-      <div><h2>Connect</h2><a href={MESSENGER} {...external}>Messenger ↗</a><a href={FACEBOOK} {...external}>Facebook page ↗</a><a href={REVIEWS} {...external}>Customer reviews ↗</a></div>
+    <div className="footer-frame">
+      <div className="footer-top"><Brand /><a href={MESSENGER} {...external}>Message DCSR <span aria-hidden="true">↗</span></a></div>
+      <div className="footer-main">
+        <div><h2>Explore</h2><a href="#services">Services</a><a href="#about">About DCSR</a><a href="#reviews">Reviews</a><a href="#inquire">Inquire</a><a href="#faq">FAQs</a></div>
+        <div><h2>Connect</h2><a href={MESSENGER} {...external}>Messenger ↗</a><a href={FACEBOOK} {...external}>Facebook page ↗</a><a href={REVIEWS} {...external}>Customer reviews ↗</a></div>
+        <div className="footer-inquiry"><h2>Have a question?</h2><p>Tell us about your unit, the issue, and your location. DCSR can take it from there.</p><a href={MESSENGER} {...external}>Start a conversation <span aria-hidden="true">↗</span></a></div>
+      </div>
+      <div className="footer-signature" aria-hidden="true">DCSR</div>
+      <div className="footer-bottom"><span>© {new Date().getFullYear()} DCSR Aircon & Refrigeration Repair Services</span><span>Aircon · Refrigeration · Maintenance</span></div>
     </div>
-    <div className="container footer-signature" aria-hidden="true">DCSR <span>↗</span></div>
-    <div className="container footer-bottom"><span>© {new Date().getFullYear()} DCSR Aircon & Refrigeration Repair Services</span><span>Built for better first conversations.</span></div>
   </footer>;
 }
 
@@ -350,6 +412,7 @@ export default function App() {
       document.documentElement.classList.remove('motion-ready');
     };
   }, []);
+
 
   return <>
     {showPreloader && <Preloader exiting={preloaderExiting} />}
