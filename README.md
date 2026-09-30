@@ -30,6 +30,7 @@ The website controls the section layout, typography, and surrounding colors. Cal
 ## Content and design sources
 
 - Business name, logo, and tagline: https://www.facebook.com/zzzbhbp30
+- Services, owner, founding year, phone, email, and Capas address: DCSR business flyer supplied in the conversation on 30 September 2026.
 - Messenger destination: https://m.me/zzzbhbp30
 - Initial landing page reference: https://dribbble.com/shots/26753792-AC-Repair-Landing-Page-Design
 - Service section layout and saturated blue palette: https://dribbble.com/shots/26865291-AirServe-HVAC-Repair-Website-Design
@@ -43,5 +44,5 @@ The room photo illustrates the service; it is not presented as a DCSR job.
 ## Before publication
 
 - Confirm the supplied customer recommendation excerpts and names against the original Facebook posts before publication; the site links to DCSR's reviews page as their source.
-- Confirm the exact service list, area coverage, hours, and any business phone number with DCSR before adding them.
+- Confirm service coverage and hours with DCSR before adding them.
 - Check that the Messenger link opens the intended DCSR conversation from the target browser and location.

@@ -2,7 +2,7 @@
 body { background: #e9f2f7; }
 
 /* The service visual stays in place while scrolling changes the selected concern. */
-.services { height: 270svh; padding: 0; overflow: visible; color: #202b34; background: #fff; }
+.services { height: 320svh; padding: 0; overflow: visible; color: #202b34; background: #fff; }
 .services::before { display: none; }
 .services-stage { position: sticky; top: 0; height: 100svh; min-height: 680px; background: #fff; }
 .services-inner { display: grid; grid-template-columns: 47% 53%; grid-template-rows: auto 1fr; grid-template-areas: "label content" "visual content"; height: 100%; min-height: inherit; padding-top: clamp(135px, 15vh, 170px); padding-bottom: 60px; }
@@ -59,6 +59,9 @@ body { background: #e9f2f7; }
 .about-photo img, .about-photo::after { border-radius: 0; }
 .about-photo img { filter: saturate(.72); }
 .about-copy h2 { color: #233b4d; }
+.about-copy .about-approach { margin-top: 13px !important; font-size: .86rem !important; }
+.about-copy .about-values { margin: 16px 0 0 !important; color: #2d789e !important; font-size: .76rem !important; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.about-values span { padding-inline: 5px; color: #83b7d0; }
 .about-proof { border-radius: 0; background: #fff; box-shadow: none; }
 .reviews { padding: 105px 0 110px; overflow: hidden; background: #fff; }
 .reviews-heading { text-align: center; }
@@ -91,6 +94,7 @@ body { background: #e9f2f7; }
 .review-card:first-child .review-card-foot span { color: #4f7187; }
 .booking-section { background: #f0f7fb; }
 .booking-frame { border-radius: 0; box-shadow: 0 16px 40px rgba(38,87,116,.08); }
+.booking-phone { display: inline-block; margin-top: 15px; color: #236b96; font-size: .78rem; font-weight: 700; }
 .faq { background: #fff; }
 .faq-list { border: 0; border-top: 1px solid #dbe5eb; border-radius: 0; padding: 0; background: none; box-shadow: none; }
 .faq-list details { border-bottom: 1px solid #dbe5eb; border-radius: 0; }
@@ -120,7 +124,10 @@ body { background: #e9f2f7; }
 .footer-main a:not(.brand) { display: block; width: max-content; min-height: 24px; margin-bottom: 7px; color: #fff; font-size: .82rem; }
 .footer-main a:not(.brand):hover, .footer-inquiry a:hover { color: #83b9ee; }
 .footer-inquiry p { max-width: 340px; color: #aeb6bc; font-size: .9rem; line-height: 1.55; }
-.footer-inquiry a { display: inline-flex !important; gap: 24px; margin-top: 12px; padding-bottom: 7px; border-bottom: 1px solid #6c7981; }
+.footer-inquiry address { display: flex; flex-direction: column; gap: 5px; color: #fff; font-size: .83rem; font-style: normal; line-height: 1.6; }
+.footer-inquiry address a { display: block !important; width: fit-content; margin: 0; padding: 0; border: 0; overflow-wrap: anywhere; }
+.footer-inquiry address span { display: block; margin-top: 4px; color: #c4cbd0; }
+.footer-inquiry > p { margin-top: 20px; color: #8a969d; font-size: .75rem; }
 .footer-signature { width: 100%; padding: 0; border: 0; color: #fff; font-family: "Outfit", Arial, sans-serif; font-size: clamp(9rem, 24vw, 24rem); font-weight: 700; letter-spacing: -.095em; line-height: .72; text-align: left; }
 .footer-bottom { display: flex; justify-content: space-between; gap: 20px; margin-top: 65px; padding: 18px 0 0; border-top: 1px solid #292e33; color: #747e85; font-size: .67rem; }
 

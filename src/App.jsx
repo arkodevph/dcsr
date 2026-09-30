@@ -4,33 +4,42 @@ import Cal, { getCalApi } from '@calcom/embed-react';
 const MESSENGER = 'https://m.me/zzzbhbp30';
 const FACEBOOK = 'https://www.facebook.com/zzzbhbp30';
 const REVIEWS = `${FACEBOOK}/reviews`;
+const PHONE = '0947-499-2273';
+const PHONE_LINK = 'tel:+639474992273';
+const EMAIL = 'dickson.gutierrez@yahoo.com';
 const HERO_VIDEO = import.meta.env.VITE_HERO_VIDEO_URL || '/assets/hero-aircon-loop.mp4';
 const CAL_LINK = import.meta.env.VITE_CAL_LINK?.trim() || '';
 const external = { target: '_blank', rel: 'noopener noreferrer' };
 
 const services = [
   {
-    number: '01 / AIRCON', title: 'Aircon repair',
+    number: '01 / INSTALLATION', title: 'Installation services',
     image: '/assets/service-aircon-3d.webp',
-    description: 'Tell us what your unit is doing, or what it isn’t. Start a conversation about repair through Messenger.',
-    link: 'Ask about repair', label: 'Ask about aircon repair on Messenger',
+    description: 'Ask DCSR about installing an air conditioning unit for your space.',
+    link: 'Ask about installation', label: 'Ask about aircon installation on Messenger',
   },
   {
-    number: '02 / REFRIGERATION', title: 'Refrigeration repair',
-    image: '/assets/service-refrigeration-3d.webp',
-    description: 'Get in touch about refrigeration equipment that needs inspection or repair.',
-    link: 'Ask about repair', label: 'Ask about refrigeration repair on Messenger',
+    number: '02 / AIRCON UNITS', title: 'Sale & supply of aircon units',
+    image: '/assets/service-aircon-3d.webp',
+    description: 'Get in touch about air conditioning units available for your needs.',
+    link: 'Ask about units', label: 'Ask about air conditioning units on Messenger',
   },
   {
-    number: '03 / UPKEEP', title: 'Maintenance',
+    number: '03 / CLEANING', title: 'General cleaning',
     image: '/assets/service-maintenance-3d.webp',
-    description: 'Ask about maintenance for your aircon or refrigeration system and share its current condition.',
-    link: 'Ask about maintenance', label: 'Ask about maintenance on Messenger',
+    description: 'Discuss cleaning for your air conditioning unit and share its current condition.',
+    link: 'Ask about cleaning', label: 'Ask about aircon cleaning on Messenger',
+  },
+  {
+    number: '04 / REPAIR', title: 'Maintenance & repair',
+    image: '/assets/service-refrigeration-3d.webp',
+    description: 'Tell DCSR what is happening with your aircon or refrigeration equipment.',
+    link: 'Ask about repair', label: 'Ask about maintenance and repair on Messenger',
   },
 ];
 
 const steps = [
-  ['Choose a concern', 'Repair, refrigeration, or maintenance.'],
+  ['Choose a concern', 'Installation, unit supply, cleaning, maintenance, or repair.'],
   ['Share your unit', 'The type or model, if you know it.'],
   ['Describe the issue', 'What changed, and a photo if useful.'],
   ['Add your location', 'Your city or barangay helps with availability.'],
@@ -39,9 +48,10 @@ const steps = [
 
 const faqs = [
   ['How do I request a service?', 'Use any “Message DCSR” link on this page. It opens DCSR’s Messenger conversation so you can explain your concern.'],
+  ['What services does DCSR offer?', 'DCSR lists installation, sale and supply of air conditioning units, general cleaning, and maintenance and repair for air conditioning and refrigeration.'],
   ['What should I include in my message?', 'Share the type of unit, the issue you noticed, your location, and any useful photos. DCSR can follow up about the details.'],
-  ['Do you serve my area?', 'Service coverage is best confirmed directly. Send your location to DCSR through Messenger and ask about availability.'],
-  ['Can I ask about maintenance?', 'Yes. DCSR’s public page describes repair and maintenance services. Send a message with your unit details to discuss your needs.'],
+  ['Where is DCSR based?', 'DCSR lists its address as 905 San Felipe St., Brgy. Lawy, Capas, Tarlac. For service coverage, send your location and ask about availability.'],
+  ['Can I call instead?', `Yes. The number on DCSR’s business flyer is ${PHONE}.`],
 ];
 
 const reviews = [
@@ -141,7 +151,7 @@ function Hero() {
       <div className="hero-main">
         <p className="hero-kicker">DCSR AIRCON & REFRIGERATION</p>
         <h1 id="hero-title"><span className="hero-line">Aircon trouble?</span><em className="hero-line hero-cool">Bring back the cool.</em></h1>
-        <p className="hero-description">Aircon and refrigeration repair and maintenance. Tell DCSR what needs attention and start the conversation on Messenger.</p>
+        <p className="hero-description">Installation, unit supply, cleaning, maintenance and repair for aircon and refrigeration. Tell DCSR what needs attention on Messenger.</p>
         <div className="hero-actions">
           <a className="button button-primary" href={MESSENGER} {...external}>Message DCSR <span aria-hidden="true">↗</span></a>
           <a className="button button-outline" href="#services">Explore our services <span aria-hidden="true">↗</span></a>
@@ -196,7 +206,7 @@ function Services() {
           <span className="services-visual-caption">DCSR / {services[active].number}</span>
         </div>
         <div className="services-content">
-          <div className="services-heading"><h2 id="services-title">Care for every<br />cooling concern.</h2><p>Repair and upkeep for aircon and refrigeration units. Choose what needs attention.</p></div>
+          <div className="services-heading"><h2 id="services-title">Care for every<br />cooling concern.</h2><p>From a new installation to cleaning and repair. Choose what needs attention.</p></div>
           <div className="services-list">
             {services.map((service, index) => <div className={`services-row${index === active ? ' is-active' : ''}`} key={service.number}>
               <button type="button" onClick={() => setActive(index)} onMouseEnter={() => setActive(index)} aria-label={`Show ${service.title}`} aria-pressed={index === active}><span>{service.title}</span><span className="services-row-arrow" aria-hidden="true">↗</span></button>
@@ -217,7 +227,9 @@ function About() {
       <div className="about-copy" data-reveal>
         <p className="section-kicker section-kicker-light">02 / ABOUT DCSR</p>
         <h2 id="about-title">The details make<br /><em>the difference.</em></h2>
-        <p>DCSR handles aircon and refrigeration repair and maintenance. Tell them what is happening with your unit, and get a direct conversation started.</p>
+        <p>Since 2020, DCSR Aircon &amp; Refrigeration Repair Services has provided air conditioning and refrigeration solutions for residential, commercial, and industrial clients. The business is based in Capas, Tarlac and owned by Dickson J. Gutierrez.</p>
+        <p className="about-approach">DCSR’s business profile highlights trained technicians, modern tools, accurate diagnostics, affordable pricing, and responsive technical support.</p>
+        <p className="about-values">Integrity <span>·</span> Excellence <span>·</span> Accountability</p>
         <div className="about-proof"><span>FROM A CUSTOMER REVIEW</span><blockquote>“Very accommodating ng owner and at the same time sya din ang mismong gagawa ng trabaho.”</blockquote><strong>Aileen Nicasio · June 2023</strong></div>
         <a className="text-link about-link" href={MESSENGER} {...external}>Talk to DCSR about your unit <span aria-hidden="true">↗</span></a>
       </div>
@@ -287,12 +299,12 @@ function Booking() {
       <div className="booking-copy" data-reveal>
         <p className="section-kicker section-kicker-light">05 / SERVICE INQUIRY</p>
         <h2 id="booking-title">Tell us the issue.<br /><em>{CAL_LINK ? 'Find time to talk.' : 'Start the conversation.'}</em></h2>
-        <p>{CAL_LINK ? 'Choose a time to discuss your aircon or refrigeration concern. DCSR can confirm service details and availability with you afterward.' : 'Begin with a short message about your unit. DCSR can discuss the details and next steps with you directly.'}</p>
+        <p>{CAL_LINK ? 'Choose a time to discuss installation, unit supply, cleaning, maintenance, or repair. DCSR can confirm the details and availability with you afterward.' : 'Begin with a short message about the service you need and your unit. DCSR can discuss the details and next steps with you directly.'}</p>
         {CAL_LINK && <div className="booking-prep"><span>WHAT TO HAVE READY</span><ul><li>Type of unit or service needed</li><li>What you have noticed</li><li>Your city or barangay</li></ul></div>}
       </div>
       <div className="booking-frame">
         <div className="booking-frame-head"><span>DCSR / SERVICE INQUIRY</span><span>{CAL_LINK ? 'CHOOSE A TIME' : 'MESSAGE DCSR'}</span></div>
-        {CAL_LINK ? <div className="booking-embed"><CalCalendar /></div> : <div className="booking-pending"><span className="booking-pending-label">DIRECT INQUIRY / MESSENGER</span><h3>Tell us what needs attention.</h3><p>Online scheduling is being prepared. You can send the essentials now and continue directly with DCSR.</p><div className="booking-preview" aria-label="Details to include"><span><b>01</b> Your unit</span><span><b>02</b> The issue</span><span><b>03</b> Your location</span></div><a className="button button-primary" href={MESSENGER} {...external}>Send an inquiry <span aria-hidden="true">↗</span></a></div>}
+        {CAL_LINK ? <div className="booking-embed"><CalCalendar /></div> : <div className="booking-pending"><span className="booking-pending-label">DIRECT INQUIRY / MESSENGER</span><h3>Tell us what needs attention.</h3><p>Online scheduling is being prepared. You can send the essentials now and continue directly with DCSR.</p><div className="booking-preview" aria-label="Details to include"><span><b>01</b> Service needed</span><span><b>02</b> Your unit</span><span><b>03</b> Your location</span></div><a className="button button-primary" href={MESSENGER} {...external}>Send an inquiry <span aria-hidden="true">↗</span></a><a className="booking-phone" href={PHONE_LINK}>Or call {PHONE}</a></div>}
         <div className="booking-frame-foot"><span>{CAL_LINK ? 'An inquiry time is for discussing your concern.' : 'Continue the conversation directly on Messenger.'}</span>{CAL_LINK && <a href={`https://cal.com/${CAL_LINK}`} {...external}>Open calendar separately ↗</a>}</div>
       </div>
     </div>
@@ -325,10 +337,10 @@ function Footer() {
       <div className="footer-main">
         <div><h2>Explore</h2><a href="#services">Services</a><a href="#about">About DCSR</a><a href="#reviews">Reviews</a><a href="#inquire">Inquire</a><a href="#faq">FAQs</a></div>
         <div><h2>Connect</h2><a href={MESSENGER} {...external}>Messenger ↗</a><a href={FACEBOOK} {...external}>Facebook page ↗</a><a href={REVIEWS} {...external}>Customer reviews ↗</a></div>
-        <div className="footer-inquiry"><h2>Have a question?</h2><p>Tell us about your unit, the issue, and your location. DCSR can take it from there.</p><a href={MESSENGER} {...external}>Start a conversation <span aria-hidden="true">↗</span></a></div>
+        <div className="footer-inquiry"><h2>Contact DCSR</h2><address><a href={PHONE_LINK}>{PHONE}</a><a href={`mailto:${EMAIL}`}>{EMAIL}</a><span>905 San Felipe St., Brgy. Lawy,<br />Capas, Tarlac</span></address><p>Dickson J. Gutierrez · Owner</p></div>
       </div>
       <div className="footer-signature" aria-hidden="true">DCSR</div>
-      <div className="footer-bottom"><span>© {new Date().getFullYear()} DCSR Aircon & Refrigeration Repair Services</span><span>Aircon · Refrigeration · Maintenance</span></div>
+      <div className="footer-bottom"><span>© {new Date().getFullYear()} DCSR Aircon & Refrigeration Repair Services</span><span>Installation · Unit supply · Cleaning · Maintenance &amp; repair</span></div>
     </div>
   </footer>;
 }
