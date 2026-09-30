@@ -92,7 +92,7 @@ const brands = [
 function Brand() {
   return <a className="brand" href="#top" aria-label="DCSR home">
     <img src="/assets/dcsr-logo.jpg" width="52" height="52" alt="" />
-    <span className="brand-name">DCSR<span>Aircon & Refrigeration</span></span>
+    <span className="brand-name">DCSR<span>Aircon &amp; Refrigeration Repair Services</span></span>
   </a>;
 }
 
@@ -157,7 +157,7 @@ function Hero() {
     <div className="hero-wash" aria-hidden="true"></div>
     <div className="container hero-content">
       <div className="hero-main">
-        <p className="hero-kicker">DCSR AIRCON & REFRIGERATION</p>
+        <p className="hero-kicker">DCSR AIRCON &amp; REFRIGERATION REPAIR SERVICES</p>
         <h1 id="hero-title"><span className="hero-line">Aircon trouble?</span><em className="hero-line hero-cool">Bring back the cool.</em></h1>
         <p className="hero-description">Installation, unit supply, cleaning, maintenance and repair for aircon and refrigeration. Visit DCSR’s Facebook page to send your inquiry.</p>
         <div className="hero-actions">
