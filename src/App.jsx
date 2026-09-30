@@ -14,7 +14,7 @@ const external = { target: '_blank', rel: 'noopener noreferrer' };
 const services = [
   {
     number: '01 / INSTALLATION', title: 'Installation services',
-    image: '/assets/service-aircon-3d.webp',
+    image: '/assets/service-installation-3d.webp',
     description: 'Ask DCSR about installing an air conditioning unit for your space.',
     link: 'Ask about installation', label: 'Ask about aircon installation on Messenger',
   },
@@ -26,13 +26,13 @@ const services = [
   },
   {
     number: '03 / CLEANING', title: 'General cleaning',
-    image: '/assets/service-maintenance-3d.webp',
+    image: '/assets/service-cleaning-3d.webp',
     description: 'Discuss cleaning for your air conditioning unit and share its current condition.',
     link: 'Ask about cleaning', label: 'Ask about aircon cleaning on Messenger',
   },
   {
     number: '04 / REPAIR', title: 'Maintenance & repair',
-    image: '/assets/service-refrigeration-3d.webp',
+    image: '/assets/service-maintenance-3d.webp',
     description: 'Tell DCSR what is happening with your aircon or refrigeration equipment.',
     link: 'Ask about repair', label: 'Ask about maintenance and repair on Messenger',
   },
