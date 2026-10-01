@@ -8,6 +8,14 @@ const PHONE_LINK = 'tel:+639474992273';
 const EMAIL = 'dickson.gutierrez@yahoo.com';
 const HERO_VIDEO = import.meta.env.VITE_HERO_VIDEO_URL || '/assets/hero-aircon-loop.mp4';
 const CAL_LINK = import.meta.env.VITE_CAL_LINK?.trim() || '';
+const MAX_ATTACHMENTS = 4;
+const MAX_FILE_BYTES = 5 * 1024 * 1024;
+const MAX_TOTAL_BYTES = 15 * 1024 * 1024;
+const ATTACHMENT_TYPES = new Set([
+  'image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/heic', 'image/heif', 'image/avif',
+  'application/pdf', 'application/msword',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'text/plain',
+]);
 const external = { target: '_blank', rel: 'noopener noreferrer' };
 
 const services = [
@@ -46,9 +54,9 @@ const steps = [
 ];
 
 const faqs = [
-  ['How do I request a service?', 'Use any “Visit DCSR on Facebook” link on this page. It opens DCSR’s official Facebook page so you can send your inquiry.'],
+  ['How do I request a service?', 'Use the Service Inquiry form to send your details and up to four images or files. You can also contact DCSR through its official Facebook page.'],
   ['What services does DCSR offer?', 'DCSR lists installation, sale and supply of air conditioning units, general cleaning, and maintenance and repair for air conditioning and refrigeration.'],
-  ['What should I include in my message?', 'Share the type of unit, the issue you noticed, your location, and any useful photos. DCSR can follow up about the details.'],
+  ['What should I include in my request?', 'Share the type of unit, the issue you noticed, and your location. You can attach up to four images or documents to help DCSR assess the issue.'],
   ['Where is DCSR based?', 'DCSR lists its address as 905 San Felipe St., Brgy. Lawy, Capas, Tarlac. For service coverage, send your location and ask about availability.'],
   ['Can I call instead?', `Yes. The number on DCSR’s business flyer is ${PHONE}.`],
 ];
@@ -321,6 +329,34 @@ function CalCalendar() {
   return <Cal className="cal-inline" calLink={CAL_LINK} config={{ layout: 'month_view', theme: 'light' }} />;
 }
 
+function InquiryAttachmentPicker({ attachments, error, onAdd, onRemove }) {
+  const [previews, setPreviews] = useState([]);
+  const fileInput = useRef(null);
+
+  useEffect(() => {
+    const urls = attachments.map((file) => file.type.startsWith('image/') ? URL.createObjectURL(file) : null);
+    setPreviews(urls);
+    return () => urls.forEach((url) => { if (url) URL.revokeObjectURL(url); });
+  }, [attachments]);
+
+  return <div className="job-request-upload job-request-wide">
+    <p className="job-request-upload-label">Images or files of your unit (optional)</p>
+    <p id="inquiry-attachments-help">Attach up to {MAX_ATTACHMENTS} images or files to help DCSR assess the issue. JPG, PNG, WebP, GIF, HEIC, HEIF, AVIF, PDF, DOC, DOCX, or TXT. Each file must be 5 MB or less; all files together must be 15 MB or less.</p>
+    <input ref={fileInput} id="inquiry-attachments" name="attachments" type="file" accept=".jpg,.jpeg,.png,.webp,.gif,.heic,.heif,.avif,.pdf,.doc,.docx,.txt" multiple hidden disabled={attachments.length >= MAX_ATTACHMENTS} onChange={onAdd} />
+    <button className="job-request-upload-picker" type="button" disabled={attachments.length >= MAX_ATTACHMENTS} aria-describedby="inquiry-attachments-help inquiry-attachments-count" onClick={() => fileInput.current?.click()}>{attachments.length >= MAX_ATTACHMENTS ? '4-file limit reached' : 'Add images or files'}</button>
+    <p className="job-request-upload-count" id="inquiry-attachments-count" role="status">{attachments.length} of {MAX_ATTACHMENTS} files selected{attachments.length === MAX_ATTACHMENTS ? ' · Maximum reached' : ''}</p>
+    {error && <p className="job-request-upload-error" role="alert">{error}</p>}
+    {attachments.length > 0 && <ul className="job-request-upload-list" aria-label="Selected inquiry attachments">
+      {attachments.map((file, index) => <li key={`${file.name}-${file.lastModified}-${index}`}>
+        {previews[index] && <img src={previews[index]} alt={`Preview of ${file.name}`} />}
+        {!previews[index] && <span className="job-request-upload-file" aria-hidden="true">{file.name.split('.').pop().toUpperCase()}</span>}
+        <span title={file.name}>{file.name}</span>
+        <button type="button" onClick={() => onRemove(index)} aria-label={`Remove ${file.name}`}>Remove</button>
+      </li>)}
+    </ul>}
+  </div>;
+}
+
 function JobRequestForm() {
   const [step, setStep] = useState(1);
   const [calendarMonth, setCalendarMonth] = useState(() => {
@@ -328,6 +364,11 @@ function JobRequestForm() {
     return new Date(date.getFullYear(), date.getMonth(), 1);
   });
   const [calendarError, setCalendarError] = useState(false);
+  const [attachments, setAttachments] = useState([]);
+  const [attachmentError, setAttachmentError] = useState('');
+  const [submissionError, setSubmissionError] = useState('');
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
   const [request, setRequest] = useState({
     name: '', phone: '', email: '', service: '', location: '', unit: '', concern: '', date: '', time: '',
   });
@@ -344,12 +385,40 @@ function JobRequestForm() {
   const dateValue = (date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 
   const updateRequest = (event) => setRequest((current) => ({ ...current, [event.target.name]: event.target.value }));
+  const addAttachments = (event) => {
+    const selected = Array.from(event.target.files || []);
+    event.target.value = '';
+    if (!selected.length) return;
+    if (attachments.length + selected.length > MAX_ATTACHMENTS) {
+      setAttachmentError(`You can attach a maximum of ${MAX_ATTACHMENTS} files, including images. Select fewer files or remove one first.`);
+      return;
+    }
+    if (selected.some((file) => !ATTACHMENT_TYPES.has(file.type))) {
+      setAttachmentError('Choose a supported image or document file.');
+      return;
+    }
+    if (selected.some((file) => file.size > MAX_FILE_BYTES)) {
+      setAttachmentError('Each attachment must be 5 MB or less.');
+      return;
+    }
+    if ([...attachments, ...selected].reduce((total, file) => total + file.size, 0) > MAX_TOTAL_BYTES) {
+      setAttachmentError('Attachments must total 15 MB or less.');
+      return;
+    }
+    setAttachments((current) => [...current, ...selected]);
+    setAttachmentError('');
+  };
+  const removeAttachment = (index) => {
+    setAttachments((current) => current.filter((_, attachmentIndex) => attachmentIndex !== index));
+    setAttachmentError('');
+  };
   const showStep = (nextStep) => {
     setStep(nextStep);
     window.requestAnimationFrame(() => stepHeading.current?.focus());
   };
-  const submitStep = (event) => {
+  const submitStep = async (event) => {
     event.preventDefault();
+    if (sending) return;
     if (step === 2 && !request.date) {
       setCalendarError(true);
       document.querySelector('.job-request-days button:not(:disabled)')?.focus();
@@ -360,26 +429,33 @@ function JobRequestForm() {
       return;
     }
 
-    const preferredDate = new Date(`${request.date}T12:00:00`).toLocaleDateString('en-PH', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-    const subject = `Job request: ${request.service} — ${request.name}`;
-    const body = [
-      `Name: ${request.name}`,
-      `Phone: ${request.phone}`,
-      `Email: ${request.email || 'Not provided'}`,
-      `Service: ${request.service}`,
-      `Location: ${request.location}`,
-      `Unit type / model: ${request.unit || 'Not sure'}`,
-      `Preferred date: ${preferredDate}`,
-      `Preferred time: ${request.time}`,
-      '',
-      'Concern:',
-      request.concern,
-    ].join('\n');
-
-    window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    setSending(true);
+    setSubmissionError('');
+    const formData = new FormData();
+    Object.entries(request).forEach(([key, value]) => formData.append(key, value));
+    attachments.forEach((file) => formData.append('attachments', file, file.name));
+    try {
+      const response = await fetch('/api/inquiries', { method: 'POST', body: formData });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || result.ok !== true) {
+        setSubmissionError(result.error || 'The inquiry could not be sent. Please try again or call DCSR.');
+        return;
+      }
+      setSent(true);
+    } catch {
+      setSubmissionError('The inquiry could not be sent. Please try again or call DCSR.');
+    } finally {
+      setSending(false);
+    }
   };
 
   const preferredDate = request.date ? new Date(`${request.date}T12:00:00`).toLocaleDateString('en-PH', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) : '';
+
+  if (sent) return <div className="job-request-success" role="status">
+    <span>REQUEST SENT</span>
+    <h3>Thank you, {request.name}.</h3>
+    <p>Your inquiry and {attachments.length} {attachments.length === 1 ? 'attachment' : 'attachments'} were sent to DCSR. The team will review your concern and confirm availability with you.</p>
+  </div>;
 
   return <form className="job-request-form" onSubmit={submitStep}>
     <ol className="job-request-progress" aria-label="Job request progress">
@@ -406,6 +482,7 @@ function JobRequestForm() {
           <label><span>City or barangay *</span><input name="location" type="text" autoComplete="address-level2" value={request.location} onChange={updateRequest} required /></label>
           <label><span>Unit type or model</span><input name="unit" type="text" placeholder="Split type, window type, refrigerator…" value={request.unit} onChange={updateRequest} /></label>
           <label className="job-request-wide"><span>Describe the concern *</span><textarea name="concern" rows="4" placeholder="What happened, when it started, and anything DCSR should know" value={request.concern} onChange={updateRequest} required /></label>
+          <InquiryAttachmentPicker attachments={attachments} error={attachmentError} onAdd={addAttachments} onRemove={removeAttachment} />
         </div>
       </div>}
 
@@ -444,7 +521,7 @@ function JobRequestForm() {
         <div className="job-request-intro">
           <span>STEP 03 / CONFIRMATION</span>
           <h3 ref={stepHeading} tabIndex="-1">Review your job request.</h3>
-          <p>Check the details before preparing the email to DCSR. You can return to either step to make changes.</p>
+          <p>Check the details before sending your inquiry and attachments to DCSR. You can return to either step to make changes.</p>
         </div>
         <dl className="job-request-summary">
           <div><dt>Customer</dt><dd>{request.name}<span>{request.phone}{request.email ? ` · ${request.email}` : ''}</span></dd></div>
@@ -452,16 +529,18 @@ function JobRequestForm() {
           <div><dt>Location</dt><dd>{request.location}</dd></div>
           <div><dt>Preferred schedule</dt><dd>{preferredDate}<span>{request.time}</span></dd></div>
           <div className="job-request-summary-wide"><dt>Concern</dt><dd>{request.concern}</dd></div>
+          <div className="job-request-summary-wide"><dt>Attachments</dt><dd>{attachments.length ? `${attachments.length} of ${MAX_ATTACHMENTS} selected` : 'No files added'}{attachments.length > 0 && <span>{attachments.map((file) => file.name).join(', ')}</span>}</dd></div>
         </dl>
-        <p className="job-request-confirmation">Submitting prepares an email addressed to {EMAIL}. The request is complete only after you send it from your email app. DCSR will confirm availability separately.</p>
+        <p className="job-request-confirmation">Selecting “Send inquiry” sends this request and its attachments to DCSR. DCSR will confirm availability separately.</p>
       </div>}
     </div>
 
     <div className="job-request-actions">
       {step > 1 && <button className="job-request-back" type="button" onClick={() => showStep(step - 1)}>← Back</button>}
-      <button className="button button-primary" type="submit">{step === 3 ? 'Prepare email request' : 'Continue'} <span aria-hidden="true">{step === 3 ? '↗' : '→'}</span></button>
+      <button className="button button-primary" type="submit" disabled={sending}>{sending ? 'Sending inquiry…' : step === 3 ? 'Send inquiry' : 'Continue'} <span aria-hidden="true">{step === 3 ? '↗' : '→'}</span></button>
       {step === 1 && <a href={PHONE_LINK}>Prefer to call? {PHONE}</a>}
     </div>
+    {submissionError && <p className="job-request-submit-error" role="alert">{submissionError}</p>}
   </form>;
 }
 
@@ -470,14 +549,14 @@ function Booking() {
     <div className="container booking-grid">
       <div className="booking-copy" data-reveal>
         <p className="section-kicker section-kicker-light">05 / SERVICE INQUIRY</p>
-        <h2 id="booking-title">Tell us the issue.<br /><em>{CAL_LINK ? 'Find time to talk.' : 'Request a service.'}</em></h2>
-        <p>{CAL_LINK ? 'Choose a time to discuss installation, unit supply, cleaning, maintenance, or repair. DCSR can confirm the details and availability with you afterward.' : 'Share the service you need, your location, and what is happening with your unit. DCSR will use these details to understand the request.'}</p>
-        {CAL_LINK && <div className="booking-prep"><span>WHAT TO HAVE READY</span><ul><li>Type of unit or service needed</li><li>What you have noticed</li><li>Your city or barangay</li></ul></div>}
+        <h2 id="booking-title">Tell us the issue.<br /><em>Request a service.</em></h2>
+        <p>Share the service you need, your location, and what is happening with your unit. Add up to four images or files to help DCSR assess the issue before responding.</p>
       </div>
       <div className="booking-frame">
-        <div className="booking-frame-head"><span>DCSR / SERVICE INQUIRY</span><span>{CAL_LINK ? 'CHOOSE A TIME' : 'JOB REQUEST FORM'}</span></div>
-        {CAL_LINK ? <div className="booking-embed"><CalCalendar /></div> : <JobRequestForm />}
-        <div className="booking-frame-foot"><span>{CAL_LINK ? 'An inquiry time is for discussing your concern.' : `Requests are prepared for ${EMAIL}.`}</span>{CAL_LINK && <a href={`https://cal.com/${CAL_LINK}`} {...external}>Open calendar separately ↗</a>}</div>
+        <div className="booking-frame-head"><span>DCSR / SERVICE INQUIRY</span><span>JOB REQUEST FORM</span></div>
+        <JobRequestForm />
+        {CAL_LINK && <div className="booking-calendar-option"><h3>Prefer to choose a time to talk?</h3><p>Calendar bookings are for discussing your concern. Use the form above to send photos or files.</p><div className="booking-embed"><CalCalendar /></div></div>}
+        <div className="booking-frame-foot"><span>Inquiries are sent to {EMAIL}.</span>{CAL_LINK && <a href={`https://cal.com/${CAL_LINK}`} {...external}>Open calendar separately ↗</a>}</div>
       </div>
     </div>
   </section>;

@@ -5,11 +5,11 @@ A React and Vite landing page for DCSR Aircon & Refrigeration Repair Services.
 ## Run locally
 
 ```bash
-npm install --legacy-peer-deps
+npm install
 npm run dev
 ```
 
-Open the URL shown by Vite. Run `npm run build` for the production build.
+Open `http://localhost:5173`. Run `npm run build` and then `npm start` to serve the production build and inquiry API. The server uses `PORT` when supplied by the host.
 
 ## Hero video
 
@@ -17,15 +17,13 @@ The supplied Google Flow clip is installed at `public/assets/hero-aircon-loop.mp
 
 The video is muted and loops automatically. To use a different clip, replace the MP4 or set `VITE_HERO_VIDEO_URL` in `.env.local` to its public URL.
 
-## Connect the service inquiry calendar
+## Service inquiries and attachments
 
-The Inquire section is ready for a Cal.com inline calendar. Until a link is supplied, it shows a three-step job request: customer and service details, a preferred date and time, then a confirmation review. The final action prepares an email to DCSR in the visitor's email app. The preferred schedule is a request; it does not promise a repair visit.
+The Inquire section has a three-step request form: customer and service details, a preferred date and time, then a confirmation review. Visitors can attach up to four images or documents (JPG, PNG, WebP, GIF, HEIC, HEIF, AVIF, PDF, DOC, DOCX, or TXT). Each file is limited to 5 MB and the combined attachments to 15 MB. The form and attachments are sent together to DCSR; the preferred schedule is only a request.
 
-1. Create a Cal.com event type for service inquiries and set its availability and duration. In the event's booking questions, collect the service or unit type, what is happening, and the customer's city or barangay. Cal.com already collects name and email; add a phone question only if DCSR needs it for follow-up.
-2. Copy `.env.example` to `.env.local` and set `VITE_CAL_LINK` to the event path, such as `yourname/service-inquiry` (without `https://cal.com/`). No API key is needed for the public embed.
-3. Restart Vite. The branded inline calendar will replace the job request form in the Inquire section. An external calendar link remains available if the embed cannot load.
+Copy `.env.example` to `.env.local` and set `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASSWORD`, and `SMTP_FROM` for DCSR's SMTP account. Set `INQUIRY_TO` to the inbox that should receive requests. `SMTP_FROM` must be an address the SMTP account is allowed to send from. These variables are read only by the server; never prefix SMTP secrets with `VITE_`. Restart the server after changing them. Without SMTP settings, the API returns an unavailable message and the form does not claim the request was sent.
 
-The website controls the section layout, typography, and surrounding colors. Cal.com's embed uses a light theme and DCSR blue (`#245cc4`); the event's booking questions and availability are managed in Cal.com. Changing every internal calendar component would require a more involved Cal.com Atoms integration.
+If `VITE_CAL_LINK` is set to a public Cal.com event path, the inline calendar appears below the request form as another way to arrange a discussion. Calendar bookings do not send the form's attachments.
 
 ## Content and design sources
 

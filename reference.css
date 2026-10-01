@@ -141,6 +141,21 @@ body { background: #e9f2f7; }
 .job-request-fields input::placeholder, .job-request-fields textarea::placeholder { color: #92a4af; }
 .job-request-fields input:focus, .job-request-fields select:focus, .job-request-fields textarea:focus { border-color: #4e96bd; background: #fff; box-shadow: 0 0 0 3px rgba(78,150,189,.13); }
 .job-request-wide { grid-column: 1 / -1; }
+.job-request-upload { display: grid; gap: 10px; min-width: 0; padding: 18px; border: 1px dashed #a6c5d7; background: #f3f9fc; }
+.job-request-upload .job-request-upload-label { color: #315d78; font-size: .77rem; font-weight: 750; }
+.job-request-upload > p { margin: 0; color: #607d91; font-size: .73rem; line-height: 1.5; }
+.job-request-upload-picker { width: fit-content; min-height: 44px; padding: 10px 16px; border: 1px solid #8eb8ce; color: #205f83; background: #fff; cursor: pointer; font-size: .77rem; font-weight: 750; }
+.job-request-upload-picker:hover:not(:disabled) { background: #e9f5fb; }
+.job-request-upload-picker:disabled { border-color: #cfdee7; color: #668194; background: #eaf1f5; cursor: default; }
+.job-request-upload .job-request-upload-count { color: #315d78; font-weight: 750; }
+.job-request-upload .job-request-upload-error { color: #a52d2d; font-weight: 750; }
+.job-request-upload-list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin: 4px 0 0; padding: 0; list-style: none; }
+.job-request-upload-list li { display: flex; flex-direction: column; min-width: 0; overflow: hidden; border: 1px solid #cfdee7; background: #fff; }
+.job-request-upload-list img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: #eaf1f5; }
+.job-request-upload-list .job-request-upload-file { display: grid; place-items: center; width: 100%; aspect-ratio: 4 / 3; padding: 8px; color: #2f7195; background: #eaf1f5; font-size: .85rem; font-weight: 800; }
+.job-request-upload-list span { flex: 1; padding: 8px; overflow-wrap: anywhere; color: #315d78; font-size: .66rem; line-height: 1.35; }
+.job-request-upload-list button { padding: 8px; border: 0; border-top: 1px solid #e1ebf0; color: #236b96; background: #fff; cursor: pointer; font-size: .68rem; font-weight: 750; text-align: left; }
+.job-request-upload-list button:hover { background: #eaf5fa; }
 .job-request-calendar { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(250px, .85fr); gap: 22px; margin-top: 30px; }
 .job-request-date, .job-request-times { min-width: 0; padding: 25px; border: 1px solid #cfdee7; background: rgba(255,255,255,.68); }
 .job-request-date { position: relative; }
@@ -180,6 +195,15 @@ body { background: #e9f2f7; }
 .job-request-actions .button { border-radius: 999px; background: #236b96; }
 .job-request-back { min-height: 48px; padding: 0 7px; border: 0; color: #2f6d90; background: transparent; cursor: pointer; font: inherit; font-size: .75rem; font-weight: 750; }
 .job-request-actions > a { color: #326e91; font-size: .72rem; font-weight: 750; }
+.job-request-actions .button:disabled { opacity: .65; cursor: wait; transform: none; }
+.job-request-submit-error { margin: 18px 0 0; padding: 12px 14px; border-left: 3px solid #a52d2d; color: #8d2828; background: #fff4f3; font-size: .78rem; line-height: 1.5; }
+.job-request-success { padding: 56px 38px 70px; color: #173d59; }
+.job-request-success > span { color: #2c6d8e; font-size: .65rem; font-weight: 800; letter-spacing: .16em; }
+.job-request-success h3 { margin: 12px 0; font-family: "Outfit", Arial, sans-serif; font-size: clamp(1.9rem, 3vw, 2.8rem); line-height: 1.1; }
+.job-request-success p { max-width: 520px; margin: 0; color: #587488; font-size: .88rem; line-height: 1.65; }
+.booking-calendar-option { padding: 30px 38px; border-top: 1px solid #d6e3eb; }
+.booking-calendar-option h3 { margin: 0 0 8px; color: #173d59; font-family: "Outfit", Arial, sans-serif; font-size: 1.4rem; }
+.booking-calendar-option p { margin: 0 0 16px; color: #587488; font-size: .78rem; line-height: 1.5; }
 .faq { background: #fff; }
 .faq-list { border: 0; border-top: 1px solid #dbe5eb; border-radius: 0; padding: 0; background: none; box-shadow: none; }
 .faq-list details { border-bottom: 1px solid #dbe5eb; border-radius: 0; }
@@ -253,6 +277,9 @@ body { background: #e9f2f7; }
   .job-request-fields { grid-template-columns: 1fr; gap: 14px; }
   .job-request-wide { grid-column: auto; }
   .job-request-fields input, .job-request-fields select, .job-request-fields textarea { font-size: 1rem; }
+  .job-request-upload-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .job-request-success { padding: 40px 20px 50px; }
+  .booking-calendar-option { padding: 25px 20px; }
   .job-request-actions { align-items: flex-start; flex-direction: column; }
   .job-request-actions .button { width: 100%; }
   .job-request-calendar { grid-template-columns: 1fr; gap: 14px; }
