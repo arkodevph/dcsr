@@ -75,9 +75,9 @@ body { background: #e9f2f7; }
 /* Keep surrounding sections in the same restrained white and blue palette. */
 .about-band { color: #233b4d; background: #eef6fa; }
 .about-grid { min-height: 640px; padding-block: 95px; }
-.about-photo { height: 520px; border: 0; border-radius: 0; box-shadow: none; }
+.about-photo { height: auto; aspect-ratio: 4 / 3; border: 0; border-radius: 0; box-shadow: none; }
 .about-photo img, .about-photo::after { border-radius: 0; }
-.about-photo img { filter: saturate(.72); }
+.about-photo img { object-position: 70% center; filter: saturate(.72); }
 .about-copy h2 { color: #233b4d; }
 .about-copy .about-approach { margin-top: 13px !important; font-size: .86rem !important; }
 .about-copy .about-values { margin: 16px 0 0 !important; color: #2d789e !important; font-size: .76rem !important; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
@@ -297,7 +297,7 @@ body { background: #e9f2f7; }
   .steps-list li, .steps-list li:not(:first-child), .steps-list li:nth-child(2), .steps-list li:nth-child(3) { min-height: 215px; padding: 0; }
   .step-trigger { min-height: 215px; padding: 18px 15px; }
   .step-copy strong { font-size: 1.04rem; }
-  .about-photo { height: 380px; }
+  .about-photo { height: auto; }
   .reviews { padding: 85px 0 90px; }
   .reviews-heading h2 { font-size: clamp(2.45rem, 9vw, 3.35rem); }
   .reviews-carousel { height: 465px; margin-top: 30px; }

@@ -262,7 +262,7 @@ function Services() {
 function About() {
   return <section className="about-band" id="about" aria-labelledby="about-title">
     <div className="container about-grid">
-      <div className="about-photo" data-reveal><img src="/assets/cool-room-aux.webp" width="1025" height="1535" alt="Illustrative photo of a quiet room with an AUX air conditioner" loading="lazy" /><div className="about-photo-caption"><span>DCSR / COMFORT AT HOME</span><span>Illustrative photography</span></div></div>
+      <div className="about-photo" data-reveal><img src="/assets/about-technician.webp" width="1536" height="1024" alt="Technician with a clipboard beside outdoor air-conditioning units" loading="lazy" /><div className="about-photo-caption"><span>DCSR / SERVICE IN FOCUS</span><span>Illustrative photography</span></div></div>
       <div className="about-copy" data-reveal>
         <p className="section-kicker section-kicker-light">02 / ABOUT DCSR</p>
         <h2 id="about-title">The details make<br /><em>the difference.</em></h2>

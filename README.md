@@ -39,8 +39,9 @@ If `VITE_CAL_LINK` is set to a public Cal.com event path, the inline calendar ap
 - Hero layout: the two images supplied in the conversation
 - Preloader motion references: [ideative's blue wave](https://dribbble.com/shots/4321884-Preloader-animation), [ExtraHut's blue and white brand intro](https://dribbble.com/shots/5408341-ExtraHut-website-preloader), and [Uniko's minimal site transition](https://dribbble.com/shots/24954294-Architectural-Website-Design-Preloader-Menu). DCSR uses its own fan mark and a circular reveal from the fan into the aircon hero.
 - Illustrative room photo: https://www.pexels.com/photo/a-minimalistic-white-room-7587368/
+- About section photo: technician image supplied in the conversation.
 
-The room photo illustrates the service; it is not presented as a DCSR job.
+The About and room photos illustrate the service; they are not presented as DCSR jobs.
 
 ## Before publication
 
