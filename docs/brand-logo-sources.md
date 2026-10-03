@@ -22,3 +22,5 @@ The brand list follows the DCSR image supplied on 30 September 2026. These are m
 | `toshiba.svg` | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Toshiba_logo.svg) |
 | `sanyo.svg` | [Logotyp.us](https://logotyp.us/get/sanyo/) |
 | `york.png` | [YORK distributor artwork](https://yorkwest.net/images/York-Install-Confidence.jpg) |
+
+The AUX logo in `public/assets/brands/aux.png` was supplied by the user on 3 October 2026 and appears on the aircon units in the site's illustrative imagery.

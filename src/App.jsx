@@ -21,25 +21,25 @@ const external = { target: '_blank', rel: 'noopener noreferrer' };
 const services = [
   {
     number: '01 / INSTALLATION', title: 'Installation services',
-    image: '/assets/service-installation-3d.webp',
+    image: '/assets/service-installation-aux.webp',
     description: 'Ask DCSR about installing an air conditioning unit for your space.',
     link: 'Ask about installation', label: 'Ask about aircon installation on Facebook',
   },
   {
     number: '02 / AIRCON UNITS', title: 'Sale & supply of aircon units',
-    image: '/assets/service-aircon-3d.webp',
+    image: '/assets/service-aircon-aux.webp',
     description: 'Get in touch about air conditioning units available for your needs.',
     link: 'Ask about units', label: 'Ask about air conditioning units on Facebook',
   },
   {
     number: '03 / CLEANING', title: 'General cleaning',
-    image: '/assets/service-cleaning-3d.webp',
+    image: '/assets/service-cleaning-aux.webp',
     description: 'Discuss cleaning for your air conditioning unit and share its current condition.',
     link: 'Ask about cleaning', label: 'Ask about aircon cleaning on Facebook',
   },
   {
     number: '04 / REPAIR', title: 'Maintenance & repair',
-    image: '/assets/service-maintenance-3d.webp',
+    image: '/assets/service-maintenance-aux.webp',
     description: 'Tell DCSR what is happening with your aircon or refrigeration equipment.',
     link: 'Ask about repair', label: 'Ask about maintenance and repair on Facebook',
   },
@@ -161,6 +161,9 @@ function Hero() {
   return <section className="hero" aria-labelledby="hero-title">
     <div className="hero-media" aria-hidden="true">
       {HERO_VIDEO && !reduceMotion && <video className={videoReady ? 'is-ready' : ''} src={HERO_VIDEO} autoPlay muted loop playsInline preload="metadata" poster="/assets/hero-aircon-poster-v2.webp" onCanPlay={() => setVideoReady(true)} />}
+      <svg className="hero-unit-logo" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" focusable="false">
+        <image href="/assets/brands/aux.png" x="1028" y="675" width="72" height="24" />
+      </svg>
     </div>
     <div className="hero-wash" aria-hidden="true"></div>
     <div className="container hero-content">
@@ -259,7 +262,7 @@ function Services() {
 function About() {
   return <section className="about-band" id="about" aria-labelledby="about-title">
     <div className="container about-grid">
-      <div className="about-photo" data-reveal><img src="/assets/cool-room.jpg" width="900" height="1200" alt="Illustrative photo of a quiet room with an installed air conditioner" loading="lazy" /><div className="about-photo-caption"><span>DCSR / COMFORT AT HOME</span><span>Illustrative photography</span></div></div>
+      <div className="about-photo" data-reveal><img src="/assets/cool-room-aux.webp" width="1025" height="1535" alt="Illustrative photo of a quiet room with an AUX air conditioner" loading="lazy" /><div className="about-photo-caption"><span>DCSR / COMFORT AT HOME</span><span>Illustrative photography</span></div></div>
       <div className="about-copy" data-reveal>
         <p className="section-kicker section-kicker-light">02 / ABOUT DCSR</p>
         <h2 id="about-title">The details make<br /><em>the difference.</em></h2>

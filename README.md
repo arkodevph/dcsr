@@ -16,6 +16,7 @@ Open `http://localhost:5173`. Run `npm run build` and then `npm start` to serve 
 The supplied Google Flow clip is installed at `public/assets/hero-aircon-loop.mp4`. The hero uses its first frame as a still while loading and when reduced motion is requested. Its headline and buttons remain live HTML over the video, so they stay sharp, accessible, and clickable.
 
 The video is muted and loops automatically. To use a different clip, replace the MP4 or set `VITE_HERO_VIDEO_URL` in `.env.local` to its public URL.
+The AUX mark is placed over the static outdoor unit by the `.hero-unit-logo` SVG in `src/App.jsx`; update its coordinates if the hero clip changes.
 
 ## Service inquiries and attachments
 
@@ -30,6 +31,7 @@ If `VITE_CAL_LINK` is set to a public Cal.com event path, the inline calendar ap
 - Business name, logo, and tagline: https://www.facebook.com/zzzbhbp30
 - Services, owner, founding year, phone, email, and Capas address: DCSR business flyer supplied in the conversation on 30 September 2026.
 - Brands shown below the hero: DCSR brand strip supplied in the conversation on 30 September 2026. Local logo artwork and its sources are listed in [docs/brand-logo-sources.md](docs/brand-logo-sources.md).
+- AUX wordmark on the visible aircon units: logo supplied on 3 October 2026. The service illustrations and room photos are illustrative images with the AUX mark added; the hero places the mark over the unit in both the still and video.
 - Facebook destination: https://www.facebook.com/zzzbhbp30
 - Initial landing page reference: https://dribbble.com/shots/26753792-AC-Repair-Landing-Page-Design
 - Service section layout and saturated blue palette: https://dribbble.com/shots/26865291-AirServe-HVAC-Repair-Website-Design

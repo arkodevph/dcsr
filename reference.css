@@ -209,7 +209,7 @@ body { background: #e9f2f7; }
 .faq-list details { border-bottom: 1px solid #dbe5eb; border-radius: 0; }
 
 /* A quiet room scene closes the page before the black footer. */
-.final-cta { height: min(78svh, 740px); min-height: 580px; margin: 20px 18px 0; border-radius: 0; color: #fff; background: #243a4c url('/assets/room-original.webp') center / cover no-repeat; }
+.final-cta { height: min(78svh, 740px); min-height: 580px; margin: 20px 18px 0; border-radius: 0; color: #fff; background: #243a4c url('/assets/room-aux.webp') center / cover no-repeat; }
 .final-cta::before { display: none; }
 .final-cta-shade { position: absolute; inset: 0; width: 100%; height: 100%; }
 .final-cta-shade { background: linear-gradient(90deg, rgba(5,17,27,.62), rgba(5,17,27,.19) 60%), linear-gradient(0deg, rgba(5,17,27,.53), transparent 55%); }
