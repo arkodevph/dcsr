@@ -9,8 +9,8 @@ const EMAIL = 'dickson.gutierrez@yahoo.com';
 const HERO_VIDEO = import.meta.env.VITE_HERO_VIDEO_URL || '/assets/hero-aircon-loop.mp4';
 const CAL_LINK = import.meta.env.VITE_CAL_LINK?.trim() || '';
 const MAX_ATTACHMENTS = 4;
-const MAX_FILE_BYTES = 5 * 1024 * 1024;
-const MAX_TOTAL_BYTES = 15 * 1024 * 1024;
+const MAX_FILE_BYTES = 4 * 1024 * 1024;
+const MAX_TOTAL_BYTES = 4 * 1024 * 1024;
 const ATTACHMENT_TYPES = new Set([
   'image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/heic', 'image/heif', 'image/avif',
   'application/pdf', 'application/msword',
@@ -344,7 +344,7 @@ function InquiryAttachmentPicker({ attachments, error, onAdd, onRemove }) {
 
   return <div className="job-request-upload job-request-wide">
     <p className="job-request-upload-label">Images or files of your unit (optional)</p>
-    <p id="inquiry-attachments-help">Attach up to {MAX_ATTACHMENTS} images or files to help DCSR assess the issue. JPG, PNG, WebP, GIF, HEIC, HEIF, AVIF, PDF, DOC, DOCX, or TXT. Each file must be 5 MB or less; all files together must be 15 MB or less.</p>
+    <p id="inquiry-attachments-help">Attach up to {MAX_ATTACHMENTS} images or files to help DCSR assess the issue. JPG, PNG, WebP, GIF, HEIC, HEIF, AVIF, PDF, DOC, DOCX, or TXT. Files must total 4 MB or less.</p>
     <input ref={fileInput} id="inquiry-attachments" name="attachments" type="file" accept=".jpg,.jpeg,.png,.webp,.gif,.heic,.heif,.avif,.pdf,.doc,.docx,.txt" multiple hidden disabled={attachments.length >= MAX_ATTACHMENTS} onChange={onAdd} />
     <button className="job-request-upload-picker" type="button" disabled={attachments.length >= MAX_ATTACHMENTS} aria-describedby="inquiry-attachments-help inquiry-attachments-count" onClick={() => fileInput.current?.click()}>{attachments.length >= MAX_ATTACHMENTS ? '4-file limit reached' : 'Add images or files'}</button>
     <p className="job-request-upload-count" id="inquiry-attachments-count" role="status">{attachments.length} of {MAX_ATTACHMENTS} files selected{attachments.length === MAX_ATTACHMENTS ? ' · Maximum reached' : ''}</p>
@@ -370,12 +370,23 @@ function JobRequestForm() {
   const [attachments, setAttachments] = useState([]);
   const [attachmentError, setAttachmentError] = useState('');
   const [submissionError, setSubmissionError] = useState('');
+  const [mailAvailable, setMailAvailable] = useState(null);
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
   const [request, setRequest] = useState({
     name: '', phone: '', email: '', service: '', location: '', unit: '', concern: '', date: '', time: '',
   });
   const stepHeading = useRef(null);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch('/api/inquiries', { signal: controller.signal })
+      .then((response) => response.ok ? response.json() : { available: false })
+      .then((status) => setMailAvailable(status.available === true))
+      .catch((error) => { if (error.name !== 'AbortError') setMailAvailable(false); });
+    return () => controller.abort();
+  }, []);
+
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
@@ -401,11 +412,11 @@ function JobRequestForm() {
       return;
     }
     if (selected.some((file) => file.size > MAX_FILE_BYTES)) {
-      setAttachmentError('Each attachment must be 5 MB or less.');
+      setAttachmentError('Each attachment must be 4 MB or less.');
       return;
     }
     if ([...attachments, ...selected].reduce((total, file) => total + file.size, 0) > MAX_TOTAL_BYTES) {
-      setAttachmentError('Attachments must total 15 MB or less.');
+      setAttachmentError('Attachments must total 4 MB or less.');
       return;
     }
     setAttachments((current) => [...current, ...selected]);
@@ -429,6 +440,11 @@ function JobRequestForm() {
     }
     if (step < 3) {
       showStep(step + 1);
+      return;
+    }
+
+    if (mailAvailable !== true) {
+      setSubmissionError('Online inquiries are temporarily unavailable. Please call DCSR or use its Facebook page.');
       return;
     }
 
@@ -461,6 +477,7 @@ function JobRequestForm() {
   </div>;
 
   return <form className="job-request-form" onSubmit={submitStep}>
+    {mailAvailable === false && <p className="job-request-unavailable" role="status">Online inquiries are temporarily unavailable. Please <a href={PHONE_LINK}>call {PHONE}</a> or <a href={FACEBOOK} {...external}>contact DCSR on Facebook</a>.</p>}
     <ol className="job-request-progress" aria-label="Job request progress">
       {['Your details', 'Preferred schedule', 'Confirm request'].map((label, index) => {
         const number = index + 1;
@@ -540,7 +557,7 @@ function JobRequestForm() {
 
     <div className="job-request-actions">
       {step > 1 && <button className="job-request-back" type="button" onClick={() => showStep(step - 1)}>← Back</button>}
-      <button className="button button-primary" type="submit" disabled={sending}>{sending ? 'Sending inquiry…' : step === 3 ? 'Send inquiry' : 'Continue'} <span aria-hidden="true">{step === 3 ? '↗' : '→'}</span></button>
+      <button className="button button-primary" type="submit" disabled={sending || (step === 3 && mailAvailable !== true)}>{sending ? 'Sending inquiry…' : step === 3 ? 'Send inquiry' : 'Continue'} <span aria-hidden="true">{step === 3 ? '↗' : '→'}</span></button>
       {step === 1 && <a href={PHONE_LINK}>Prefer to call? {PHONE}</a>}
     </div>
     {submissionError && <p className="job-request-submit-error" role="alert">{submissionError}</p>}
@@ -559,7 +576,7 @@ function Booking() {
         <div className="booking-frame-head"><span>DCSR / SERVICE INQUIRY</span><span>JOB REQUEST FORM</span></div>
         <JobRequestForm />
         {CAL_LINK && <div className="booking-calendar-option"><h3>Prefer to choose a time to talk?</h3><p>Calendar bookings are for discussing your concern. Use the form above to send photos or files.</p><div className="booking-embed"><CalCalendar /></div></div>}
-        <div className="booking-frame-foot"><span>Inquiries are sent to {EMAIL}.</span>{CAL_LINK && <a href={`https://cal.com/${CAL_LINK}`} {...external}>Open calendar separately ↗</a>}</div>
+        <div className="booking-frame-foot"><span>When available, online inquiries are sent to {EMAIL}.</span>{CAL_LINK && <a href={`https://cal.com/${CAL_LINK}`} {...external}>Open calendar separately ↗</a>}</div>
       </div>
     </div>
   </section>;

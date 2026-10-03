@@ -20,9 +20,11 @@ The AUX mark is placed over the static outdoor unit by the `.hero-unit-logo` SVG
 
 ## Service inquiries and attachments
 
-The Inquire section has a three-step request form: customer and service details, a preferred date and time, then a confirmation review. Visitors can attach up to four images or documents (JPG, PNG, WebP, GIF, HEIC, HEIF, AVIF, PDF, DOC, DOCX, or TXT). Each file is limited to 5 MB and the combined attachments to 15 MB. The form and attachments are sent together to DCSR; the preferred schedule is only a request.
+The Inquire section has a three-step request form: customer and service details, a preferred date and time, then a confirmation review. Visitors can attach up to four images or documents (JPG, PNG, WebP, GIF, HEIC, HEIF, AVIF, PDF, DOC, DOCX, or TXT), with a 4 MB combined limit. The form and attachments are sent together to DCSR; the preferred schedule is only a request. The combined limit keeps multipart requests under Vercel Functions' 4.5 MB request limit.
 
 Copy `.env.example` to `.env.local` and set `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASSWORD`, and `SMTP_FROM` for DCSR's SMTP account. Set `INQUIRY_TO` to the inbox that should receive requests. `SMTP_FROM` must be an address the SMTP account is allowed to send from. These variables are read only by the server; never prefix SMTP secrets with `VITE_`. Restart the server after changing them. Without SMTP settings, the API returns an unavailable message and the form does not claim the request was sent.
+
+On Vercel, `api/inquiries.js` handles the same form as a Node.js Function. Add the SMTP variables in the Vercel project's Production environment and redeploy before accepting online inquiries. The Vite build serves the site from `dist`.
 
 If `VITE_CAL_LINK` is set to a public Cal.com event path, the inline calendar appears below the request form as another way to arrange a discussion. Calendar bookings do not send the form's attachments.
 

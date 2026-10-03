@@ -116,6 +116,8 @@ body { background: #e9f2f7; }
 .booking-frame { border-radius: 0; box-shadow: 0 16px 40px rgba(38,87,116,.08); }
 .booking-phone { display: inline-block; margin-top: 15px; color: #236b96; font-size: .78rem; font-weight: 700; }
 .job-request-form { padding: 0 38px 38px; }
+.job-request-unavailable { margin: 26px 0 0; padding: 14px 16px; border-left: 3px solid #b7732b; color: #674822; background: #fff5e8; font-size: .78rem; line-height: 1.55; }
+.job-request-unavailable a { color: #174d70; font-weight: 750; text-decoration: underline; }
 .job-request-progress { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 0 -38px 36px; padding: 0 38px; border-bottom: 1px solid #d6e3eb; list-style: none; }
 .job-request-progress li { position: relative; min-width: 0; }
 .job-request-progress li::after { content: ""; position: absolute; right: 0; bottom: -1px; left: 0; height: 2px; background: transparent; }

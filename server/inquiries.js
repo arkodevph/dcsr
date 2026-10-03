@@ -2,8 +2,8 @@ import path from 'node:path';
 import Busboy from 'busboy';
 
 export const MAX_ATTACHMENTS = 4;
-export const MAX_FILE_BYTES = 5 * 1024 * 1024;
-export const MAX_TOTAL_BYTES = 15 * 1024 * 1024;
+export const MAX_FILE_BYTES = 4 * 1024 * 1024;
+export const MAX_TOTAL_BYTES = 4 * 1024 * 1024;
 
 const allowedTypes = new Map([
   ['image/jpeg', ['.jpg', '.jpeg']],
@@ -60,12 +60,12 @@ export function parseInquiry(req) {
       const chunks = [];
       stream.on('data', (chunk) => {
         totalBytes += chunk.length;
-        if (totalBytes > MAX_TOTAL_BYTES) fail(413, 'Attachments must total 15 MB or less.');
+        if (totalBytes > MAX_TOTAL_BYTES) fail(413, 'Attachments must total 4 MB or less.');
         if (!error) chunks.push(chunk);
       });
-      stream.on('limit', () => fail(413, 'Each attachment must be 5 MB or less.'));
+      stream.on('limit', () => fail(413, 'Each attachment must be 4 MB or less.'));
       stream.on('end', () => {
-        if (stream.truncated) fail(413, 'Each attachment must be 5 MB or less.');
+        if (stream.truncated) fail(413, 'Each attachment must be 4 MB or less.');
         if (!error) attachments.push({ filename, content: Buffer.concat(chunks), contentType: mimeType });
       });
     });
